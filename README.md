@@ -54,6 +54,22 @@ User not found
 
 ---
 
+### Sign In with Google → Login with Google Account
+POST /api/auth/google
+
+Body: (Raw String)
+Google ID Token received from Google Sign-In
+
+Response if success:
+{
+"token": "your JWT token"
+}
+
+Response if token is invalid:
+Invalid Google Token
+
+---
+
 ## Run the project:
 
 ./mvnw spring-boot:run
