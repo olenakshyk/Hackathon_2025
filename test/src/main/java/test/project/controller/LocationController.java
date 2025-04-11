@@ -4,12 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import test.project.entity.Location;
-import test.project.repo.LocationRepository;
+import test.project.model.Location;
 import test.project.service.LocationService;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/places_tbl")
