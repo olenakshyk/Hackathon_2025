@@ -10,7 +10,7 @@ import test.project.service.LocationService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/places_tbl")
+@RequestMapping("/locations")
 @CrossOrigin
 public class LocationController {
 
@@ -28,6 +28,8 @@ public class LocationController {
         @RequestParam(required = false) Boolean hasElevator,
         @RequestParam(required = false) Boolean hasAdaptiveToilet,
         @RequestParam(required = false) Boolean hasTactilePaving,
+        @RequestParam(required = false) Double lat,
+        @RequestParam(required = false) Double lon,
         @RequestParam(required = false) Boolean onFirstFloor,
         @RequestParam(required = false) String type,
         @RequestParam(required = false) String subtype,
@@ -39,6 +41,8 @@ public class LocationController {
             hasElevator,
             hasAdaptiveToilet,
             hasTactilePaving,
+            lat,
+            lon,
             onFirstFloor,
             type,
             subtype,
