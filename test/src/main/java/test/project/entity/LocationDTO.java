@@ -1,4 +1,4 @@
-package com.example.hackathon.Entity;
+package test.project.entity;
 
 public class LocationDTO {
 

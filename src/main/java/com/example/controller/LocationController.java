@@ -1,7 +1,9 @@
-package com.example.hackathon.Controller;
+package com.example.controller;
 
-import com.example.hackathon.Entity.Location;
-import com.example.hackathon.Service.LocationService;
+import com.example.hackathon.Service.Location
+import com.example.hackathon.service.LocationService;
+
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

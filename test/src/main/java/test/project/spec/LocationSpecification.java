@@ -1,7 +1,8 @@
-package com.example.hackathon.Spec;
+package test.project.spec;
 
-import com.example.hackathon.Entity.Location;
 import org.springframework.data.jpa.domain.Specification;
+
+import test.project.entity.Location;
 
 public class LocationSpecification {
 

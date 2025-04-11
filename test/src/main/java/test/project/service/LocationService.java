@@ -1,10 +1,11 @@
-package com.example.hackathon.Service;
+package test.project.service;
 
-import com.example.hackathon.Entity.Location;
-import com.example.hackathon.Repo.LocationRepository;
-import com.example.hackathon.Spec.LocationSpecification;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+
+import test.project.spec.LocationSpecification;
+import test.project.entity.Location;
+import test.project.repo.LocationRepository;
 
 import java.util.List;
 
