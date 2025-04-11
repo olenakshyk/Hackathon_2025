@@ -31,14 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
------------------
-# Ignore target folder
-/target/
-
-# Ignore environment files
-.env
-
-# Ignore logs
-*.log
-
