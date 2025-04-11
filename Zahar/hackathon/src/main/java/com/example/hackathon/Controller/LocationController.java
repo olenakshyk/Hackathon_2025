@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/locations")
-@CrossOrigin // дозволяє CORS-запити з фронтенду
+@CrossOrigin
 public class LocationController {
 
     private final LocationService locationService;
