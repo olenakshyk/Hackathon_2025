@@ -2,7 +2,7 @@ package test.project.spec;
 
 import org.springframework.data.jpa.domain.Specification;
 
-import test.project.entity.Location;
+import test.project.model.Location;
 
 public class LocationSpecification {
 

@@ -4,8 +4,8 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import test.project.spec.LocationSpecification;
-import test.project.entity.Location;
-import test.project.repo.LocationRepository;
+import test.project.model.Location;
+import test.project.repository.LocationRepository;
 
 import java.util.List;
 
