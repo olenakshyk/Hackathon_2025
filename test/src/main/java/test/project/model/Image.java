@@ -32,5 +32,5 @@ public class Image {
     @ManyToOne
     @JoinColumn(name = "place_id")
     @JsonBackReference
-    private Place place;
+    private Location place;
 }

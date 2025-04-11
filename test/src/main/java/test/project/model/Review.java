@@ -35,5 +35,5 @@ public class Review {
     @ManyToOne
     @JoinColumn(name = "place_id")
     @JsonBackReference
-    private Place place;
+    private Location place;
 }
