@@ -37,4 +37,8 @@ public class LocationSpecification {
     public static Specification<Location> inclusivityEquals(Integer inclusivity) {
         return (root, query, cb) -> inclusivity == null ? null : cb.equal(root.get("inclusivity"), inclusivity);
     }
+
+    public static Specification<Location> idEquals(Long id) {
+        return (root, query, cb) -> id == null ? null : cb.equal(root.get("id"), id);
+    }    
 }

@@ -19,16 +19,18 @@ public class LocationService {
     }
 
     public List<Location> filterLocations(
-            Boolean hasRamp,
-            Boolean hasElevator,
-            Boolean hasAdaptiveToilet,
-            Boolean hasTactilePaving,
-            Boolean onFirstFloor,
-            String type,
-            String subtype,
-            Integer inclusivity
+        Long id,
+        Boolean hasRamp,
+        Boolean hasElevator,
+        Boolean hasAdaptiveToilet,
+        Boolean hasTactilePaving,
+        Boolean onFirstFloor,
+        String type,
+        String subtype,
+        Integer inclusivity
     ) {
-        Specification<Location> spec = Specification.where(LocationSpecification.hasRamp(hasRamp))
+        Specification<Location> spec = Specification.where(LocationSpecification.idEquals(id))
+                .and(LocationSpecification.hasRamp(hasRamp))
                 .and(LocationSpecification.hasElevator(hasElevator))
                 .and(LocationSpecification.hasAdaptiveToilet(hasAdaptiveToilet))
                 .and(LocationSpecification.hasTactilePaving(hasTactilePaving))
