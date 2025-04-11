@@ -1,7 +1,3 @@
-dbConection.py
-application.properties
-.vscode
-
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
