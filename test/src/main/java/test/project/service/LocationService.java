@@ -49,9 +49,7 @@ public class LocationService {
             .and(LocationSpecification.withinBounds(latMin, lonMin, latMax, lonMax));
 
     List<Location> results = locationRepository.findAll(spec);
-
     double clusterDistance = getClusterDistanceFromBounds(latMin, lonMin, latMax, lonMax);
-
     if (clusterDistance == 0) {
         return results.stream().map(loc -> toDTO(loc, false)).map(x -> (Object)x).toList();
     } else {
@@ -66,9 +64,9 @@ public class LocationService {
         double ratio = currentArea / ukraineArea;
     
         if (ratio < 0.01) return 0;
-        else if (ratio < 0.1) return 100;
-        else if (ratio < 0.4) return 250;
-        else return 500;
+        else if (ratio < 0.1) return 1;
+        else if (ratio < 0.5) return 10;
+        else return 30;
     }
 
     private List<Object> getClusteredResult(List<Location> locations, double clusterDistance) {
