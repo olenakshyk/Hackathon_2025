@@ -6,12 +6,11 @@ import java.util.List;
 public class Cluster {
     private double centerLat;
     private double centerLon;
-    private final List<Location> locations;
+    private final List<Location> locations = new ArrayList<>();
 
-    public Cluster(double lat, double lon) {
-        this.centerLat = lat;
-        this.centerLon = lon;
-        this.locations = new ArrayList<>();
+    public Cluster(double centerLat, double centerLon) {
+        this.centerLat = centerLat;
+        this.centerLon = centerLon;
     }
 
     public void add(Location location) {
@@ -19,7 +18,7 @@ public class Cluster {
         recalculateCenter();
     }
 
-    public void recalculateCenter() {
+    private void recalculateCenter() {
         double sumLat = 0;
         double sumLon = 0;
         for (Location loc : locations) {
