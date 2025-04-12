@@ -49,13 +49,13 @@ public class LocationService {
 
     List<Location> results = locationRepository.findAll(spec);
 
-    double clusterDistance = getClusterDistanceFromBounds(latMin, lonMin, latMax, lonMax);
+    //double clusterDistance = getClusterDistanceFromBounds(latMin, lonMin, latMax, lonMax);
 
-    if (clusterDistance == 0) {
+    //if (clusterDistance == 0) {
         return results.stream().map(loc -> toDTO(loc, false)).toList();
-    } else {
-        return getClusteredLocationsByDistance(results, clusterDistance);
-    }
+    //} else {
+      //  return getClusteredLocationsByDistance(results, clusterDistance);
+    //}
     }
 
     private double getClusterDistanceFromBounds(

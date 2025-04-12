@@ -37,9 +37,9 @@ public class LocationController {
         @RequestParam(required = false) String subtype,
         @RequestParam(required = false) Integer inclusivity
     ) {
-        if (latMin == null || latMax == null || lonMin == null || lonMax == null) {
-            return ResponseEntity.badRequest().body(List.of());
-        }
+        // if (latMin == null || latMax == null || lonMin == null || lonMax == null) {
+        //     return ResponseEntity.badRequest().body(List.of());
+        // }
 
         List<LocationDTO> response = locationService.filterAndMaybeClusterLocations(
             id,
