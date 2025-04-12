@@ -50,8 +50,6 @@ public class LocationService {
 
     List<Location> results = locationRepository.findAll(spec);
 
-    double clusterDistance = getClusterDistanceFromBounds(latMin, lonMin, latMax, lonMax);
-
     if (clusterDistance == 0) {
         return results.stream().map(loc -> toDTO(loc, false)).map(x -> (Object)x).toList();
     } else {
