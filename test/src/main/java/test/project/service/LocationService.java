@@ -72,42 +72,40 @@ public class LocationService {
     }
 
     private List<Object> getClusteredResult(List<Location> locations, double clusterDistance) {
-    List<Cluster> clusters = new ArrayList<>();
-    List<LocationDTO> singles = new ArrayList<>();
-
-    for (Location loc : locations) {
-        if (loc.getLat() == null || loc.getLon() == null) continue;
-
-        boolean added = false;
-        for (Cluster cluster : clusters) {
-            double dist = haversine(loc.getLat(), loc.getLon(), cluster.getCenterLat(), cluster.getCenterLon());
-            if (dist <= clusterDistance) {
-                cluster.add(loc);
-                added = true;
-                break;
+        List<Cluster> clusters = new ArrayList<>();
+    
+        for (Location loc : locations) {
+            if (loc.getLat() == null || loc.getLon() == null) continue;
+    
+            boolean added = false;
+            for (Cluster cluster : clusters) {
+                double dist = haversine(loc.getLat(), loc.getLon(), cluster.getCenterLat(), cluster.getCenterLon());
+                if (dist <= clusterDistance) {
+                    cluster.add(loc);
+                    added = true;
+                    break;
+                }
+            }
+    
+            if (!added) {
+                Cluster newCluster = new Cluster(loc.getLat(), loc.getLon());
+                newCluster.add(loc);
+                clusters.add(newCluster);
             }
         }
-
-        if (!added) {
-            Cluster newCluster = new Cluster(loc.getLat(), loc.getLon());
-            newCluster.add(loc);
-            clusters.add(newCluster);
+    
+        List<Object> result = new ArrayList<>();
+        for (Cluster c : clusters) {
+            if (c.getLocations().size() == 1) {
+                result.add(toDTO(c.getLocations().get(0), false));
+            } else {
+                result.add(new ClusterDTO(c.getCenterLat(), c.getCenterLon(), c.getLocations().size()));
+            }
         }
+    
+        return result;
     }
-
-    List<Object> result = new ArrayList<>();
-    for (Cluster c : clusters) {
-        if (c.getLocations().size() == 1) {
-            result.add(toDTO(c.getLocations().get(0), false));
-        } else {
-            List<LocationDTO> clusterLocations = c.getLocations().stream()
-                .map(loc -> toDTO(loc, false)).toList();
-            result.add(new ClusterDTO(c.getCenterLat(), c.getCenterLon(), clusterLocations.size(), clusterLocations));
-        }
-    }
-
-    return result;
-    }
+    
 
     private double haversine(double lat1, double lon1, double lat2, double lon2) {
         final int R = 6371;
