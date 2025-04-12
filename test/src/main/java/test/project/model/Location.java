@@ -37,6 +37,7 @@ public class Location {
     @Column(name = "description")
     private String description;
 
+    private Integer inclusivity;
     private Double rating;
     private String name;
     private String subtype;
