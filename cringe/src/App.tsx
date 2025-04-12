@@ -1,5 +1,5 @@
 import Map from "./Map/Map"
-import scss from "./style.module.scss"
+import style from "./style.module.scss"
 import Icon from "./modified_icons/icon"
 import { left_arrow } from "./modified_icons/ICONS"
 import Panel from "./Panel/Panel"
@@ -20,12 +20,16 @@ function App() {
       }}}
       collapse={{ style: { outline: "none", userSelect: "none" } }}
     >
-      <div className={scss.container}>
-        <div className={scss.container2}>
+      <div className={style.container}>
+        <div className={style.logo}>
+          
+        </div>
+
+        <div className={style.container2}>
           <Map />
           <div>
             <Icon
-              className={scss.panelToggle}
+              className={style.panelToggle}
               path={left_arrow}
               onClick={() => {
                 setPanelOpened(true)

@@ -53,6 +53,9 @@
     .collapse_icon {
         width: 2dvw;
         align-self: center;
+        transition: 200ms;
+        stroke: #3b3b3b;
+        filter: drop-shadow(1px 1px 1px #0e0e0e58);
     }
 
 }
@@ -73,19 +76,20 @@
 .button {
     background: transparent !important;
     height: 4dvh;
+    width: fit-content;
     outline: none !important;
     transition: 200ms !important;
     box-shadow: 2px 2px 2px #0e0e0e93;
     border: 2px solid #00000066 !important;
-    border-radius: 12px;
+    border-radius: 9px;
     padding: 8px;
-    padding-inline: 7%;
+    padding-inline: 1dvw;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5%;
+    gap: 8px;
     font-size: 102%;
-    margin-inline: 1dvw;
+    margin-inline: 4px;
 
     &:hover {
         cursor: pointer;
@@ -99,8 +103,8 @@
         scale: 1.25;
     }
 
-    & div{
-        width: 140%;
+    & div {
+        width: 100%;
     }
 
 
@@ -111,7 +115,7 @@
     @extend .button;
 }
 
-.contacts_btn{
+.contacts_btn {
     @extend .button;
 }
 
@@ -125,12 +129,12 @@
 
 }
 
-.icon_container{
+.icon_container {
     width: 30%;
     height: 100%;
 }
 
-.icon{
+.icon {
     aspect-ratio: 1/1;
     width: 2dvw;
 }

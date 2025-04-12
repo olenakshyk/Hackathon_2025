@@ -4,9 +4,7 @@ import scss from "./Panel.module.scss"
 import style from "../style.module.scss"
 import { alien, call, happy_location, left_arrow, right_arrow } from "../modified_icons/ICONS";
 import Icon from "../modified_icons/icon";
-import { Button, Collapse, CollapseProps, Tooltip } from "antd";
-import { CaretRightOutlined } from "@ant-design/icons";
-import IconChangebale from "../modified_icons/iconChangebale";
+import { Collapse, CollapseProps } from "antd";
 
 interface IpanelProps {
     opened: boolean
@@ -60,21 +58,18 @@ const Panel: React.FC<IpanelProps> = ({ opened, setOpened }) => {
                         path={right_arrow}
                         style={{
                             rotate: isActive ? "90deg" : "0deg",
-                            transition: "200ms",
-                            stroke: "#3b3b3b",
-                            filter: "drop-shadow(1px 1px 1px #0e0e0e58)"
                         }}
                         className={style.icon_btn + " " + scss.collapse_icon} />}
             />
         </div>
         <div className={scss.block3}>
             <button className={scss.add_location_btn}>
-                <Icon path={happy_location} className={scss.icon} />
+                <Icon path={happy_location} className={style.icon + " " + scss.icon} />
                 <div>Додати локацію</div>
             </button>
             <div className={scss.contacts_btn_container}>
                 <button className={scss.contacts_btn}>
-                    <Icon path={call} className={scss.icon} />
+                    <Icon path={call} className={style.icon + " " + scss.icon} />
                     <div>Контакти</div>
                 </button>
             </div>
