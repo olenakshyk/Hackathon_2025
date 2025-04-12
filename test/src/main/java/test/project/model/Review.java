@@ -14,7 +14,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "reviews_tbl")
@@ -30,7 +29,7 @@ public class Review {
     private String author;
     @Column(length=1024)
     private String comment;
-    private int rating; // наприклад, 1–5 зірок
+    private int rating;
 
     @ManyToOne
     @JoinColumn(name = "place_id")
