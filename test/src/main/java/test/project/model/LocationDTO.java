@@ -1,5 +1,7 @@
 package test.project.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocationDTO {
+    private final String objectType = "location";
     private Long id;
     private String name;
     private Double lat;
@@ -23,4 +26,10 @@ public class LocationDTO {
     private Boolean hasTactilePaving;
     private Boolean onFirstFloor;
     // private Boolean isClaster;
+
+    @JsonProperty("objectType")
+    public String getObjectType() {
+        return "location";
+    }
+
 }
