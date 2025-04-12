@@ -22,5 +22,5 @@ public class LocationDTO {
     private Boolean hasRamp;
     private Boolean hasTactilePaving;
     private Boolean onFirstFloor;
-    private Boolean isClaster;
+    // private Boolean isClaster;
 }
