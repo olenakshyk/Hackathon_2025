@@ -1,0 +1,73 @@
+
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+* {
+    font-family: "Ubuntu Mono", monospace;
+    font-weight: 600;
+    font-style: normal;
+    color: #171717e4;
+}
+
+.container {
+    width: 100dvw;
+    height: 100dvh;
+    overflow: hidden;
+}
+
+.container2 {
+    display: flex;
+    width: 128dvw;
+    height: 100dvh;
+}
+
+.icon{
+    aspect-ratio: 1/1;
+    transition: 100ms;
+    fill: #3b3b3b;
+
+}
+
+.icon_btn{
+    @extend .icon;
+    filter: drop-shadow(2px 2px 2px #0e0e0e93);
+    
+    
+    &:hover{
+        cursor: pointer;
+        scale: 1.1;
+    filter: drop-shadow(2px 2px 2px #0051ffa1);
+    
+    }
+
+    &:active{
+        transition: 150ms;
+        scale: 1.25;
+    }
+
+}
+
+.panelToggle {
+    @extend .icon_btn;
+    width: 4dvw;
+    position: absolute;
+    z-index: 1000;
+    right: 2dvw;
+    top: 46dvh;
+    animation: panel-toggle 1s infinite alternate;
+    user-select: none;
+}
+
+@keyframes panel-toggle {
+    0% {
+        scale: 1;
+
+    }
+
+    100% {
+        scale: 1.05;
+    }
+}
