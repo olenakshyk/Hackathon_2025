@@ -39,7 +39,10 @@ const LocationData: React.FC = () => {
     if (mapBounds) {
       axios.get("http://localhost:8080/locations/filter?", {
         params: {
-          // Можна додати параметри запиту
+          latMin: mapBounds.getSouthWest().lat,
+          latMax: mapBounds.getNorthEast().lat,
+          lonMin: mapBounds.getSouthWest().lng,
+          lonMax: mapBounds.getNorthEast().lng
         }
       })
         .then((res: ApiResponse) => {
