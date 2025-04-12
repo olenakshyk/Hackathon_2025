@@ -1,0 +1,136 @@
+.container {
+    width: 28dvw;
+    height: 100dvh;
+    z-index: 1000;
+
+    background: linear-gradient(45deg, rgb(106, 221, 171) 30%, rgb(78, 213, 136) 100%);
+    box-shadow: -2px 5px 4px #0000004d;
+
+}
+
+.block1 {
+
+    padding-bottom: 0.75dvw;
+    margin: 1.25dvw;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 4px solid #0000001b;
+    border-radius: 5px;
+
+    .close_btn {
+        width: 3dvw;
+    }
+
+    .acount_btn {
+        width: 4dvw;
+    }
+}
+
+.block2 {
+    margin: 1.25dvw;
+    padding-bottom: 0.75dvw;
+
+    & * {
+        outline: none !important;
+    }
+
+    .collapse {
+
+        font-size: 170%;
+        // font-weight: 800;
+
+        &:hover {
+            filter: drop-shadow(2px 2px 4px #0c677337);
+            transition: 150ms;
+        }
+
+        &:active {
+            transition: 150ms;
+            scale: 1.01;
+        }
+    }
+
+    .collapse_icon {
+        width: 2dvw;
+        align-self: center;
+    }
+
+}
+
+.block3 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 2.5dvw);
+    padding: 1.25dvw 1.25dvw 0 1.25dvw;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.button {
+    background: transparent !important;
+    height: 4dvh;
+    outline: none !important;
+    transition: 200ms !important;
+    box-shadow: 2px 2px 2px #0e0e0e93;
+    border: 2px solid #00000066 !important;
+    border-radius: 12px;
+    padding: 8px;
+    padding-inline: 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5%;
+    font-size: 102%;
+    margin-inline: 1dvw;
+
+    &:hover {
+        cursor: pointer;
+        scale: 1.05;
+        box-shadow: 2px 2px 2px #00000093;
+
+    }
+
+    &:active {
+        transition: 150ms;
+        scale: 1.25;
+    }
+
+    & div{
+        width: 140%;
+    }
+
+
+
+}
+
+.add_location_btn {
+    @extend .button;
+}
+
+.contacts_btn{
+    @extend .button;
+}
+
+.contacts_btn_container {
+    padding: 1.25dvw 1.25dvw 1.25dvw 0;
+
+    &:hover .contacts_btn {
+        transition: 300ms;
+        transform: translateX(200%);
+    }
+
+}
+
+.icon_container{
+    width: 30%;
+    height: 100%;
+}
+
+.icon{
+    aspect-ratio: 1/1;
+    width: 2dvw;
+}
