@@ -2,16 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import axios, { AxiosError } from 'axios';
 import L, { DivIcon, LatLngBounds } from 'leaflet';
+import qs from 'qs';
 import { renderToString } from "react-dom/server";
 
 import scss from "./Map.module.scss";
 import 'leaflet/dist/leaflet.css';
-import { mapSettings } from './mapSettings';
 import Icon from '../modified_icons/icon';
 import { default_marker } from '../modified_icons/ICONS';
 import { Location } from "../types/Location";
 import { LocationInfoModal } from "../modals/locationInfo";
 import { Claster } from '../types/Claster';
+import { mapSettings } from './mapSettings';
+import { Ifilter } from '../App';
+import { filters } from '../Panel/Filter/Filter';
+import IconChangebale from '../modified_icons/iconChangebale';
 
 
 interface ApiResponse {
@@ -38,7 +42,7 @@ const handleResponse = (locations: Location[], clasters: Claster[], data: Locati
   }
 };
 
-const LocationData: React.FC = () => {
+const LocationData: React.FC<{ filter: Ifilter | undefined }> = ({ filter: filter }) => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [clasters, setClasters] = useState<Claster[]>([]);
   const [mapBounds, setMapBounds] = useState<LatLngBounds | null>(null);
@@ -58,8 +62,11 @@ const LocationData: React.FC = () => {
           latMin: mapBounds.getSouthWest().lat,
           latMax: mapBounds.getNorthEast().lat,
           lonMin: mapBounds.getSouthWest().lng,
-          lonMax: mapBounds.getNorthEast().lng
-        }
+          lonMax: mapBounds.getNorthEast().lng,
+          features: filter?.features,
+          subtype: filter?.types
+        },
+        paramsSerializer: params => qs.stringify(params, { arrayFormat: "repeat" })
       })
         .then((res: ApiResponse) => {
           const newLocations: Location[] = [];
@@ -72,27 +79,42 @@ const LocationData: React.FC = () => {
           console.error("Помилка при запиті з координатами:", err);
         });
     }
-  }, [mapBounds]);
+  }, [mapBounds, filter]);
 
-  const customIcon: DivIcon = new L.DivIcon({
-    html: renderToString(
+  const customIcon = (type: string): DivIcon => {
+    let color = '#333'
+    let path = default_marker
+    filters.byType.forEach((t, i) => {
+      if (type == t) {
+        color = filters.typeColors[i]
+          path = filters.typeIcons[i]
+      }
+    })
 
-      <Icon
-        path={default_marker}
-        style={{
-          stroke: 'none',
-          outline: 'none',
-          background: 'transparent',
-          display: 'block',
-          color: '#333',
-        }}
-      />
-    ),
-    className: '',
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-    popupAnchor: [0, -35],
-  });
+
+    return new L.DivIcon({
+      html: renderToString(
+
+        <IconChangebale
+          viewBox={type == '' ? '0 0 24 24' : '0 0 512 512'}
+          path={path}
+          style={{
+            stroke: 'none',
+            outline: 'none',
+            background: 'transparent',
+            display: 'block',
+            color: color,
+            fill: color,
+            scale: type == '' ? 1.2 : 1
+          }}
+        />
+      ),
+      className: '',
+      iconSize: [30, 30],
+      iconAnchor: [15, 30],
+      popupAnchor: [0, -35],
+    });
+  }
 
   const openModal = (loc: Location) => {
     setSelectedLocation(loc);
@@ -115,12 +137,12 @@ const LocationData: React.FC = () => {
           <Marker
             key={index}
             position={[loc.lat, loc.lon]}
-            icon={customIcon}
+            icon={customIcon(loc.subtype)}
 
             eventHandlers={{
               click: () => openModal(loc),
               mouseover: (e) => {
-                clearTimeout(closeTimeout); 
+                clearTimeout(closeTimeout);
 
                 openTimeout = setTimeout(() => {
                   e.target.openPopup();
@@ -145,10 +167,10 @@ const LocationData: React.FC = () => {
           <Marker
             key={index}
             position={[claster.lat, claster.lon]}
-            icon={customIcon}
+            icon={customIcon('')}
             eventHandlers={{
               mouseover: (e) => {
-                clearTimeout(closeTimeout); 
+                clearTimeout(closeTimeout);
 
                 openTimeout = setTimeout(() => {
                   e.target.openPopup();
@@ -163,7 +185,7 @@ const LocationData: React.FC = () => {
             }}
           >
             <Popup
-  closeOnClick={false}>
+              closeOnClick={false}>
               {`Об'єктів: ${claster.count}`}
             </Popup>
           </Marker>

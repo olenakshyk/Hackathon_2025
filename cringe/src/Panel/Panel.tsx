@@ -4,24 +4,28 @@ import scss from "./Panel.module.scss";
 import style from "../style.module.scss";
 import { alien, call, happy_location, left_arrow, right_arrow } from "../modified_icons/ICONS";
 import Icon from "../modified_icons/icon";
-import { Button, Collapse, CollapseProps, Tooltip } from "antd";
-import { CaretRightOutlined } from "@ant-design/icons";
+import { Collapse, CollapseProps } from "antd";
+import InfoBlock from "./InfoBlock/InfoBlock";
+import { Filter } from "./Filter/Filter";
+import { Ifilter } from "../App";
 import IconChangebale from "../modified_icons/iconChangebale";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 interface IpanelProps {
-  opened: boolean;
-  setOpened: React.Dispatch<React.SetStateAction<boolean>>;
+    opened: boolean
+    setOpened: React.Dispatch<React.SetStateAction<boolean>>,
+    filterHook: React.Dispatch<React.SetStateAction<Ifilter | undefined>>
 }
 
-const Panel: React.FC<IpanelProps> = ({ opened, setOpened }) => {
-  const collapse1: CollapseProps["items"] = [
-    {
-      key: 1,
-      label: "Фільтрувати",
-      children: <></>,
-    },
-  ];
+const Panel: React.FC<IpanelProps> = ({ opened, setOpened, filterHook }) => {
+
+
+    const collapse1: CollapseProps['items'] = [{
+        key: 1,
+        label: "Фільтрувати",
+        children: <Filter filterHook={filterHook} />
+    }
+    ]
 
   const panel = useRef<HTMLDivElement>(null);
   const navigate = useNavigate(); // Initialize useNavigate

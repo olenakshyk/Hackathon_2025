@@ -3,7 +3,7 @@
     height: 100dvh;
     z-index: 1000;
 
-    background: linear-gradient(45deg, rgb(106, 221, 171) 30%, rgb(78, 213, 136) 100%);
+    background: #485341;
     box-shadow: -2px 5px 4px #0000004d;
 
 }
@@ -37,7 +37,6 @@
     .collapse {
 
         font-size: 170%;
-        // font-weight: 800;
 
         &:hover {
             filter: drop-shadow(2px 2px 4px #0c677337);
@@ -53,6 +52,9 @@
     .collapse_icon {
         width: 2dvw;
         align-self: center;
+        transition: 200ms;
+        stroke: #d8dcd6;
+        filter: drop-shadow(1px 1px 1px #0e0e0e58);
     }
 
 }
@@ -73,24 +75,25 @@
 .button {
     background: transparent !important;
     height: 4dvh;
+    width: fit-content;
     outline: none !important;
     transition: 200ms !important;
-    box-shadow: 2px 2px 2px #0e0e0e93;
-    border: 2px solid #00000066 !important;
-    border-radius: 12px;
+    box-shadow: 2px 2px 2px #0e0e0e69;
+    border: 2px solid #d8dcd6 !important;
+    border-radius: 9px;
     padding: 8px;
-    padding-inline: 7%;
+    padding-inline: 1dvw;
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 5%;
+    gap: 8px;
     font-size: 102%;
-    margin-inline: 1dvw;
+    margin-inline: 4px;
 
     &:hover {
         cursor: pointer;
         scale: 1.05;
-        box-shadow: 2px 2px 2px #00000093;
+        box-shadow: 2px 2px 2px #0000006e;
 
     }
 
@@ -99,8 +102,8 @@
         scale: 1.25;
     }
 
-    & div{
-        width: 140%;
+    & div {
+        width: 100%;
     }
 
 
@@ -111,7 +114,7 @@
     @extend .button;
 }
 
-.contacts_btn{
+.contacts_btn {
     @extend .button;
 }
 
@@ -125,12 +128,19 @@
 
 }
 
-.icon_container{
+.icon_container {
     width: 30%;
     height: 100%;
 }
 
-.icon{
+.icon {
     aspect-ratio: 1/1;
     width: 2dvw;
+
+}
+
+.text_in_btn {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

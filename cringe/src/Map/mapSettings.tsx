@@ -1,4 +1,7 @@
-import { MapOptions } from "leaflet"
+import L, { DivIcon, MapOptions } from "leaflet"
+import { renderToString } from "react-dom/server";
+import { default_marker } from "../modified_icons/ICONS";
+import Icon from "../modified_icons/icon";
 
 export const mapSettings: MapOptions = {
     maxBounds: [
@@ -10,4 +13,6 @@ export const mapSettings: MapOptions = {
     minZoom: 6.5,
     maxZoom: 18,
     maxBoundsViscosity: 0.9,
+    zoomControl: false,
 }
+  
