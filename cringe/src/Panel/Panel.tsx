@@ -5,6 +5,7 @@ import style from "../style.module.scss"
 import { alien, call, happy_location, left_arrow, right_arrow } from "../modified_icons/ICONS";
 import Icon from "../modified_icons/icon";
 import { Collapse, CollapseProps } from "antd";
+import InfoBlock from "./InfoBlock/InfoBlock";
 
 interface IpanelProps {
     opened: boolean
@@ -61,16 +62,23 @@ const Panel: React.FC<IpanelProps> = ({ opened, setOpened }) => {
                         }}
                         className={style.icon_btn + " " + scss.collapse_icon} />}
             />
+            {}
         </div>
+
+        
+        <InfoBlock />
+
+
+
         <div className={scss.block3}>
             <button className={scss.add_location_btn}>
                 <Icon path={happy_location} className={style.icon + " " + scss.icon} />
-                <div>Додати локацію</div>
+                <div className={scss.text_in_btn} >Додати локацію</div>
             </button>
             <div className={scss.contacts_btn_container}>
                 <button className={scss.contacts_btn}>
                     <Icon path={call} className={style.icon + " " + scss.icon} />
-                    <div>Контакти</div>
+                    <div className={scss.text_in_btn} >Контакти</div>
                 </button>
             </div>
         </div>

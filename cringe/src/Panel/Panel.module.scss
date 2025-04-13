@@ -3,7 +3,7 @@
     height: 100dvh;
     z-index: 1000;
 
-    background: linear-gradient(45deg, rgb(106, 221, 171) 30%, rgb(78, 213, 136) 100%);
+    background: #485341;
     box-shadow: -2px 5px 4px #0000004d;
 
 }
@@ -37,7 +37,6 @@
     .collapse {
 
         font-size: 170%;
-        // font-weight: 800;
 
         &:hover {
             filter: drop-shadow(2px 2px 4px #0c677337);
@@ -54,7 +53,7 @@
         width: 2dvw;
         align-self: center;
         transition: 200ms;
-        stroke: #3b3b3b;
+        stroke: #d8dcd6;
         filter: drop-shadow(1px 1px 1px #0e0e0e58);
     }
 
@@ -79,8 +78,8 @@
     width: fit-content;
     outline: none !important;
     transition: 200ms !important;
-    box-shadow: 2px 2px 2px #0e0e0e93;
-    border: 2px solid #00000066 !important;
+    box-shadow: 2px 2px 2px #0e0e0e69;
+    border: 2px solid #d8dcd6 !important;
     border-radius: 9px;
     padding: 8px;
     padding-inline: 1dvw;
@@ -94,7 +93,7 @@
     &:hover {
         cursor: pointer;
         scale: 1.05;
-        box-shadow: 2px 2px 2px #00000093;
+        box-shadow: 2px 2px 2px #0000006e;
 
     }
 
@@ -137,4 +136,11 @@
 .icon {
     aspect-ratio: 1/1;
     width: 2dvw;
+
+}
+
+.text_in_btn {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }

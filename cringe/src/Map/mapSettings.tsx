@@ -10,4 +10,5 @@ export const mapSettings: MapOptions = {
     minZoom: 6.5,
     maxZoom: 18,
     maxBoundsViscosity: 0.9,
+    zoomControl: false,
 }

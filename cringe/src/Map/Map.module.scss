@@ -1,6 +1,10 @@
 .mapContainer {
     width: 100dvw;
     height: 100dvh;
+
+    &>a{
+        display: none !important;
+    }
 }
 
 .button {
@@ -31,3 +35,30 @@
         flex-direction: column;
     }
 }
+
+.rotate_container{
+    position: absolute;
+    z-index: 1004;
+    left: 0;
+    top: 0;
+    width: 100dvw;
+    height: 100dvh;
+    background: #d8dcd6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.rotator{
+    border: 1dvw solid transparent;
+    border-bottom: 1dvw solid #121d17cd;
+    border-radius: 50%;
+    height: 7dvw;
+    aspect-ratio: 1/1;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
