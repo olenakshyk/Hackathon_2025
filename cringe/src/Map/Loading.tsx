@@ -11,4 +11,9 @@ const Loading: React.FC = () => {
     </div>
 }
 
+export const MiniLoading = () => {
+    return <div className={scss.mini_rotate_container}>
+    <div className={scss.mini_rotator}/>
+</div>
+}
 export default Loading

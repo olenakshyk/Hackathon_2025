@@ -7,14 +7,25 @@ import { useEffect, useRef, useState } from "react"
 import { ConfigProvider } from 'antd';
 import "./index.scss"
 import gsap from "gsap"
+import { filters } from "./Panel/Filter/Filter"
 
-
+export interface Ifilter { features: string[], types: string[] }
 
 function App() {
 
+
+  const [filterState, setFilterHook] = useState<Ifilter>()
+
+
+
+
+
+
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
   const [panelOpened, setPanelOpened] = useState<boolean>(false);
   const logoRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
+    setFilterHook({features: filters.byFeatures, types: filters.byType})
     if (logoRef.current)
       gsap.to(logoRef.current, {
         ease: "power1.out",
@@ -39,7 +50,7 @@ function App() {
         </div>
 
         <div className={style.container2}>
-          <Map />
+          <Map filter={filterState} />
           <div>
             <Icon
               className={style.panelToggle + " " + style.icon_black}
@@ -48,7 +59,7 @@ function App() {
                 setPanelOpened(true)
               }} />
           </div>
-          <Panel opened={panelOpened} setOpened={setPanelOpened} />
+          <Panel filterHook={setFilterHook} opened={panelOpened} setOpened={setPanelOpened} />
         </div>
       </div>
     </ConfigProvider>

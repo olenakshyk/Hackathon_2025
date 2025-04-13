@@ -1,6 +1,6 @@
-import { Mediator } from "./Mediator";
 
-export interface Claster extends Mediator{
+
+export interface Claster{
     lat:number;
     lon:number;
     count:number;

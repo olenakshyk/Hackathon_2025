@@ -49,6 +49,7 @@
     align-items: center;
 }
 
+
 .rotator{
     border: 1dvw solid transparent;
     border-bottom: 1dvw solid #121d17cd;
@@ -56,6 +57,22 @@
     height: 7dvw;
     aspect-ratio: 1/1;
     animation: spin 1s linear infinite;
+}
+
+
+.mini_rotate_container{
+    @extend .rotate_container;
+    background: transparent;
+    top: 6dvw;
+    left: 2dvw;
+    width: 2dvw;
+    height: 2dvw;
+}
+
+.mini_rotator{  
+    @extend .rotator;
+    height: 2dvw;
+    border-width: 5px;
 }
 
 @keyframes spin {

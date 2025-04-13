@@ -6,19 +6,24 @@ import { alien, call, happy_location, left_arrow, right_arrow } from "../modifie
 import Icon from "../modified_icons/icon";
 import { Collapse, CollapseProps } from "antd";
 import InfoBlock from "./InfoBlock/InfoBlock";
+import { Filter } from "./Filter/Filter";
+import { Ifilter } from "../App";
 
 interface IpanelProps {
     opened: boolean
-    setOpened: React.Dispatch<React.SetStateAction<boolean>>
+    setOpened: React.Dispatch<React.SetStateAction<boolean>>,
+    filterHook: React.Dispatch<React.SetStateAction<Ifilter | undefined>>
 }
 
-const Panel: React.FC<IpanelProps> = ({ opened, setOpened }) => {
+const Panel: React.FC<IpanelProps> = ({ opened, setOpened, filterHook }) => {
+
 
     const collapse1: CollapseProps['items'] = [{
         key: 1,
         label: "Фільтрувати",
-        children: <></>
-    }]
+        children: <Filter filterHook={filterHook} />
+    }
+    ]
 
     const panel = useRef<HTMLDivElement>(null);
 
@@ -62,10 +67,10 @@ const Panel: React.FC<IpanelProps> = ({ opened, setOpened }) => {
                         }}
                         className={style.icon_btn + " " + scss.collapse_icon} />}
             />
-            {}
+            { }
         </div>
 
-        
+
         <InfoBlock />
 
 

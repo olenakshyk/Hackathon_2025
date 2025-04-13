@@ -38,6 +38,7 @@ body {
 }
 
 .icon_btn {
+    @extend .icon;
     filter: drop-shadow(2px 2px 2px #0e0e0e71);
 
 

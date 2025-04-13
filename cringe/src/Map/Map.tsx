@@ -1,28 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { MaptilerLayer } from '@maptiler/leaflet-maptilersdk';
-import scss from "./Map.module.scss"
-
-import 'leaflet/dist/leaflet.css';
-import { customIcon, mapSettings } from './mapAdditional';
-import L, { LatLngBounds } from 'leaflet';
-import Icon from '../modified_icons/icon';
-import { minus, plus, plus_minus, target } from '../modified_icons/ICONS';
-import style from "../style.module.scss"
-import Loading from './Loading';
-import { Claster } from './types/Claster';
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import axios, { AxiosError } from 'axios';
-import { Marker, Popup } from 'react-leaflet';
-import { Location } from "../../src/Map/types/Location";
+import L, { DivIcon, LatLngBounds } from 'leaflet';
+import { renderToString } from "react-dom/server";
+
+import scss from "./Map.module.scss";
+import 'leaflet/dist/leaflet.css';
+import Icon from '../modified_icons/icon';
+import { default_marker } from '../modified_icons/ICONS';
+import { Location } from "../types/Location";
+import { LocationInfoModal } from "../modals/locationInfo";
+import { Claster } from '../types/Claster';
+import { mapSettings } from './mapSettings';
+import { Ifilter } from '../App';
+import { filters } from '../Panel/Filter/Filter';
 
 
-
-
-
-
-
-export interface ApiResponse {
+interface ApiResponse {
   data: any[];
 }
+
+const MapBoundsLogger: React.FC<{ onBoundsChange: (bounds: LatLngBounds) => void }> = ({ onBoundsChange }) => {
+  useMapEvents({
+    moveend: (e) => {
+      const map = e.target;
+      const bounds = map.getBounds();
+      onBoundsChange(bounds);
+    }
+  });
+
+  return null;
+};
 
 const handleResponse = (locations: Location[], clasters: Claster[], data: Location | Claster) => {
   if ('count' in data) {
@@ -32,49 +40,16 @@ const handleResponse = (locations: Location[], clasters: Claster[], data: Locati
   }
 };
 
-
-const Map: React.FC = () => {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstance = useRef<L.Map | null>(null);
-  const [loading, setLoading] = useState<Boolean>(true);
-
-
-
-
+const LocationData: React.FC<{ filter: Ifilter | undefined }> = ({ filter: filter }) => {
   const [locations, setLocations] = useState<Location[]>([]);
   const [clasters, setClasters] = useState<Claster[]>([]);
   const [mapBounds, setMapBounds] = useState<LatLngBounds | null>(null);
   const [selectedLocation, setSelectedLocation] = useState<Location>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
 
 
-  useEffect(() => {
-    if (!mapRef.current || mapInstance.current) return;
-
-    mapInstance.current = L.map(mapRef.current, mapSettings)
-
-    //get coords
-    mapInstance.current.on('moveend', () => {
-      if (mapInstance.current) {
-        const currentBounds = mapInstance.current.getBounds();
-        setMapBounds(currentBounds)
-      }
-    });
-
-    setTimeout(() => {
-      setLoading(false)
-    }, 5000);
-
-    const mtLayer = new MaptilerLayer({
-      apiKey: 'fndbosCWDMCazHqfNJKp',
-      style: "https://api.maptiler.com/maps/01962b90-5229-7672-8f8f-131549661b39/style.json?key=fndbosCWDMCazHqfNJKp"
-    });
-
-    mtLayer.addTo(mapInstance.current);
-
-  }, []);
-
+  let openTimeout: ReturnType<typeof setTimeout>;
+  let closeTimeout: ReturnType<typeof setTimeout>;
 
 
 
@@ -85,7 +60,9 @@ const Map: React.FC = () => {
           latMin: mapBounds.getSouthWest().lat,
           latMax: mapBounds.getNorthEast().lat,
           lonMin: mapBounds.getSouthWest().lng,
-          lonMax: mapBounds.getNorthEast().lng
+          lonMax: mapBounds.getNorthEast().lng,
+            features: filter?.features,
+            subtypes: filter?.types
         }
       })
         .then((res: ApiResponse) => {
@@ -99,75 +76,75 @@ const Map: React.FC = () => {
           console.error("Помилка при запиті з координатами:", err);
         });
     }
-  }, [mapBounds]);
+  }, [mapBounds, filter]);
 
+  const customIcon = (type: string): DivIcon => {
+    let color = '#333'
+    filters.byType.forEach((t, i) =>{
+      if(type == t)
+        color = filters.typeColors[i]
+    })
+    return new L.DivIcon({
+    html: renderToString(
 
+      <Icon
+        path={default_marker}
+        style={{
+          stroke: 'none',
+          outline: 'none',
+          background: 'transparent',
+          display: 'block',
+          color: color,
+          // fill: color,
+          // scale: type == '' ? 1.5 : 1
+        }}
+      />
+    ),
+    className: '',
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+    popupAnchor: [0, -35],
+  });}
 
-  
+  const openModal = (loc: Location) => {
+    setSelectedLocation(loc);
+    setIsModalOpen(true);
+  };
 
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
 
-  return <div className={scss.mapContainer}>
-    {loading ? <Loading /> : <></>}
+  return (
     <div>
-      <div ref={mapRef} className={scss.mapContainer} />
+      <MapContainer {...mapSettings} className={scss.mapContainer}>
+        <TileLayer
+          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+        />
+        <MapBoundsLogger onBoundsChange={setMapBounds} />
 
-
-      {/* controls */}
-      <div className={scss.controls1}>
-        <Icon path={plus} className={style.icon_btn + " " + style.icon_black + " " + scss.button} onClick={() => mapInstance.current ? mapInstance.current.zoomIn() : false} />
-        <Icon path={minus} className={style.icon_btn + " " + style.icon_black + " " + scss.button} onClick={() => mapInstance.current ? mapInstance.current.zoomOut() : false} />
-      </div>
-      <div className={scss.controls2}>
-        <Icon
-          path={plus_minus}
-          style={{ width: "2.9dvw", margin: "0.55dvw" }}
-          className={style.icon_btn + " " + style.icon_black + " " + scss.button}
-          onClick={() => (Math.random() * 10) > 5 ? (mapInstance.current ? mapInstance.current.zoomIn() : false) : mapInstance.current ? mapInstance.current.zoomOut() : false} />
-        <Icon
-          path={target}
-          style={{ width: "2.9dvw", margin: "0.55dvw  " }}
-          className={style.icon_btn + " " + style.icon_black + " " + scss.button}
-          onClick={() => {
-            const link = "tel:" + "+380977557070";
-            if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(
-                (position) => {
-                  const x = position.coords.latitude;
-                  const y = position.coords.longitude;
-                  mapInstance.current ? mapInstance.current.flyTo([x, y], 16) : ""
-                },
-                (error) => {
-                  window.location.href = link
-                }
-              );
-            } else
-              window.location.href = link
-          }} />
-      </div>
-
-
-      {locations.map((loc, index) => (
+        {locations.map((loc, index) => (
           <Marker
             key={index}
             position={[loc.lat, loc.lon]}
-            icon={customIcon}
+            icon={customIcon(loc.subtype)}
 
-            // eventHandlers={{
-            //   click: () => openModal(loc),
-            //   mouseover: (e) => {
-            //     clearTimeout(closeTimeout); 
+            eventHandlers={{
+              click: () => openModal(loc),
+              mouseover: (e) => {
+                clearTimeout(closeTimeout);
 
-            //     openTimeout = setTimeout(() => {
-            //       e.target.openPopup();
-            //     }, 300);
-            //   },
-            //   mouseout: (e) => {
+                openTimeout = setTimeout(() => {
+                  e.target.openPopup();
+                }, 300);
+              },
+              mouseout: (e) => {
 
-            //     closeTimeout = setTimeout(() => {
-            //       e.target.closePopup();
-            //     }, 1000);
-            //   }
-            // }}
+                closeTimeout = setTimeout(() => {
+                  e.target.closePopup();
+                }, 1000);
+              }
+            }}
           >
             <Popup closeOnClick={false}>
               <strong>{loc.name}</strong><br />
@@ -176,44 +153,43 @@ const Map: React.FC = () => {
           </Marker>
         ))}
 
-
-
-                
-
-
-
-
-
-{clasters.map((claster, index) => (
+        {clasters.map((claster, index) => (
           <Marker
             key={index}
             position={[claster.lat, claster.lon]}
-            icon={customIcon}
-            // eventHandlers={{
-            //   mouseover: (e) => {
-            //     clearTimeout(closeTimeout); 
+            icon={customIcon('')}
+            eventHandlers={{
+              mouseover: (e) => {
+                clearTimeout(closeTimeout);
 
-            //     openTimeout = setTimeout(() => {
-            //       e.target.openPopup();
-            //     }, 300);
-            //   },
-            //   mouseout: (e) => {
+                openTimeout = setTimeout(() => {
+                  e.target.openPopup();
+                }, 300);
+              },
+              mouseout: (e) => {
 
-            //     closeTimeout = setTimeout(() => {
-            //       e.target.closePopup();
-            //     }, 1000);
-            //   }
-            // }}
+                closeTimeout = setTimeout(() => {
+                  e.target.closePopup();
+                }, 1000);
+              }
+            }}
           >
             <Popup
-  closeOnClick={false}>
+              closeOnClick={false}>
               {`Об'єктів: ${claster.count}`}
             </Popup>
           </Marker>
         ))}
-        
-    </div>
-  </div>;
-}
+      </MapContainer>
 
-export default Map;
+      {isModalOpen && selectedLocation && (
+        <LocationInfoModal
+          location={selectedLocation}
+          onClose={closeModal}
+        />
+      )}
+    </div>
+  );
+};
+
+export default LocationData;
