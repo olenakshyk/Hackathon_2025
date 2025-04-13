@@ -13,6 +13,7 @@ import LoginPage from "./components/LoginPage"
 import RegisterPage from "./components/RegisterPage"
 
 export interface Ifilter { features: string[], types: string[] }
+import { bounds } from 'leaflet';
 
 function App() {
 
@@ -47,10 +48,20 @@ function App() {
       }}
       collapse={{ style: { outline: "none", userSelect: "none" } }}
     >
-      <div className={style.container}>
-        <div ref={logoRef} className={style.logo}>
-          Карта для броколів 🥦
-        </div>
+      <div className={scss.container}>
+        <div className={scss.container2}>
+          {/* Check if the user is logged in */}
+          <>
+            {/* Кнопки авторизації показуються, якщо користувач не залогінений */}
+            {/* {!isLoggedIn && (<>
+                <Button className={scss.authButton} onClick={handleLogin}>
+                  Log In
+                </Button>
+                <Button className={scss.authButton} onClick={handleRegister}>
+                  Register
+                </Button>
+                </>
+            )} */}
 
         <div className={style.container2}>
           <Map filter={filterState} />
