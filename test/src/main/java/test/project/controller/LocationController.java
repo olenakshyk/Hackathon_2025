@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import test.project.model.Location;
 import test.project.service.LocationService;
 
 import java.util.List;
@@ -14,7 +13,7 @@ import java.util.List;
 @CrossOrigin
 public class LocationController {
 
-    private LocationService locationService;
+    private final LocationService locationService;
 
     @Autowired
     public LocationController(LocationService locationService) {
@@ -22,34 +21,31 @@ public class LocationController {
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<List<Location>> filter(
-        @RequestParam(required = false) Long id,
-        @RequestParam(required = false) Boolean hasRamp,
-        @RequestParam(required = false) Boolean hasElevator,
-        @RequestParam(required = false) Boolean hasAdaptiveToilet,
-        @RequestParam(required = false) Boolean hasTactilePaving,
-        @RequestParam(required = false) Double lat,
-        @RequestParam(required = false) Double lon,
-        @RequestParam(required = false) Boolean onFirstFloor,
-        @RequestParam(required = false) String type,
-        @RequestParam(required = false) String subtype,
-        @RequestParam(required = false) Integer inclusivity
+    public ResponseEntity<List<Object>> filter(
+    @RequestParam(required = false) Double latMin,
+    @RequestParam(required = false) Double latMax,
+    @RequestParam(required = false) Double lonMin,
+    @RequestParam(required = false) Double lonMax,
+    @RequestParam(required = false) Long id,
+    @RequestParam(required = false) Boolean hasRamp,
+    @RequestParam(required = false) Boolean hasElevator,
+    @RequestParam(required = false) Boolean hasAdaptiveToilet,
+    @RequestParam(required = false) Boolean hasTactilePaving,
+    @RequestParam(required = false) Boolean onFirstFloor,
+    @RequestParam(required = false) String type,
+    @RequestParam(required = false) String subtype,
+    @RequestParam(required = false) Integer inclusivity
 ) {
-    List<Location> results = locationService.filterLocations(
-            id,
-            hasRamp,
-            hasElevator,
-            hasAdaptiveToilet,
-            hasTactilePaving,
-            lat,
-            lon,
-            onFirstFloor,
-            type,
-            subtype,
-            inclusivity
+    if (latMin == null || latMax == null || lonMin == null || lonMax == null) {
+        return ResponseEntity.badRequest().body(List.of());
+    }
+
+    List<Object> response = locationService.filterAndMaybeClusterLocations(
+        id, hasRamp, hasElevator, hasAdaptiveToilet, hasTactilePaving, onFirstFloor,
+        type, subtype, inclusivity, latMin, latMax, lonMin, lonMax
     );
 
-    return ResponseEntity.ok(results);
+    return ResponseEntity.ok(response);
 }
 
 }
