@@ -6,6 +6,9 @@ import test.project.model.log_in.Role;
 import test.project.model.log_in.User;
 import test.project.repository.UserRepository;
 import test.project.security.JwtUtil;
+
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +41,7 @@ public class AuthController {
 
         userRepository.save(user);
 
-        return ResponseEntity.ok("User registered successfully");
+        return ResponseEntity.ok(Map.of("message", "User registered successfully"));
     }
 
     // SIGN IN
