@@ -1,11 +1,11 @@
-package main.java.test.project.controller;
+package test.project.controller;
 
-import main.java.test.project.model.log_in.AuthRequest;
-import main.java.test.project.model.log_in.AuthResponse;
-import main.java.test.project.model.log_in.Role;
-import main.java.test.project.model.log_in.User;
-import main.java.test.project.repository.UserRepository;
-import main.java.test.project.security.JwtUtil;
+import test.project.model.log_in.AuthRequest;
+import test.project.model.log_in.AuthResponse;
+import test.project.model.log_in.Role;
+import test.project.model.log_in.User;
+import test.project.repository.UserRepository;
+import test.project.security.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;

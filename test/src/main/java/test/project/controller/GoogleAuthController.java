@@ -1,13 +1,13 @@
-package main.java.test.project.controller;
+package test.project.controller;
 
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
-import main.java.test.project.model.log_in.User;
-import main.java.test.project.repository.UserRepository;
-import main.java.test.project.security.JwtUtil;
+import test.project.model.log_in.User;
+import test.project.repository.UserRepository;
+import test.project.security.JwtUtil;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

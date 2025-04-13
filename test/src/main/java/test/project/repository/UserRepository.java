@@ -1,6 +1,6 @@
-package main.java.test.project.repository;
+package test.project.repository;
 
-import main.java.test.project.model.log_in.User;
+import test.project.model.log_in.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

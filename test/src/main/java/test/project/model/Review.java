@@ -27,7 +27,7 @@ public class Review {
     private Long id;
 
     private String author;
-    @Column(length=1024)
+    @Column(length=2048)
     private String comment;
     private int rating;
 

@@ -1,4 +1,4 @@
-package main.java.test.project.model.log_in;
+package test.project.model.log_in;
 
 public enum Role {
     USER,
