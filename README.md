@@ -83,8 +83,11 @@ Access denied: Only Admin
 Create `.env` file in project root:
 
 DB_USERNAME=your_postgres_username
+
 DB_PASSWORD=your_postgres_password
+
 JWT_SECRET=your_secret_key
+
 GOOGLE_CLIENT_ID=your_google_client_id
 
 ---
