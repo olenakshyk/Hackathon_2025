@@ -63,10 +63,13 @@ public class LocationService {
         double currentArea = Math.abs(latMax - latMin) * Math.abs(lonMax - lonMin);
         double ratio = currentArea / ukraineArea;
     
-        if (ratio < 0.01) return 0;
-        else if (ratio < 0.1) return 1;
-        else if (ratio < 0.5) return 10;
-        else return 30;
+        if (ratio < 0.00005) return 0;
+        else if(ratio < 0.001) return 0.2;
+        else if(ratio <0.005) return 0.5;
+        else if(ratio < 0.05) return 3;
+        else if (ratio < 0.2) return 6;
+        else if (ratio < 0.5) return 8;
+        else return 12;
     }
 
     private List<Object> getClusteredResult(List<Location> locations, double clusterDistance) {

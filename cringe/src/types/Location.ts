@@ -1,3 +1,4 @@
+
 export interface Location {
   id: number;
   name: string;
@@ -13,5 +14,4 @@ export interface Location {
   hasRamp: boolean;
   hasTactilePaving: boolean;
   onFirstFloor: boolean;
-  isClaster: boolean;
 }

@@ -1,6 +1,5 @@
 import React from 'react';
 import { Location } from "../types/Location"
-import { check_ico } from '../modified_icons/ICONS';
 
 export const LocationInfoModal: React.FC<{ location: Location; onClose: () => void }> = ({ location, onClose }) => {
     return (

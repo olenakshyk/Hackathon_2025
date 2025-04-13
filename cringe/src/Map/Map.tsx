@@ -2,21 +2,22 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import axios, { AxiosError } from 'axios';
 import L, { DivIcon, LatLngBounds } from 'leaflet';
-import { renderToString } from "react-dom/server"
+import { renderToString } from "react-dom/server";
 
 import scss from "./Map.module.scss";
 import 'leaflet/dist/leaflet.css';
 import { mapSettings } from './mapSettings';
 import Icon from '../modified_icons/icon';
 import { default_marker } from '../modified_icons/ICONS';
-import { Location } from "../types/Location"
-import { LocationInfoModal  } from "../modals/locationInfo"
+import { Location } from "../types/Location";
+import { LocationInfoModal } from "../modals/locationInfo";
+import { Claster } from '../types/Claster';
+
 
 interface ApiResponse {
-  data: Location[];
+  data: any[];
 }
 
-// Компонент для слідкування за змінами карти
 const MapBoundsLogger: React.FC<{ onBoundsChange: (bounds: LatLngBounds) => void }> = ({ onBoundsChange }) => {
   useMapEvents({
     moveend: (e) => {
@@ -29,12 +30,27 @@ const MapBoundsLogger: React.FC<{ onBoundsChange: (bounds: LatLngBounds) => void
   return null;
 };
 
+const handleResponse = (locations: Location[], clasters: Claster[], data: Location | Claster) => {
+  if ('count' in data) {
+    clasters.push(data);
+  } else if ('name' in data && 'subtype' in data) {
+    locations.push(data);
+  }
+};
+
 const LocationData: React.FC = () => {
   const [locations, setLocations] = useState<Location[]>([]);
+  const [clasters, setClasters] = useState<Claster[]>([]);
   const [mapBounds, setMapBounds] = useState<LatLngBounds | null>(null);
-  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);  // Тепер всередині компонента
+  const [selectedLocation, setSelectedLocation] = useState<Location>();
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // Запит при зміні меж карти
+
+
+  let openTimeout: ReturnType<typeof setTimeout>;
+  let closeTimeout: ReturnType<typeof setTimeout>;
+
+
+
   useEffect(() => {
     if (mapBounds) {
       axios.get("http://localhost:8080/locations/filter?", {
@@ -46,7 +62,11 @@ const LocationData: React.FC = () => {
         }
       })
         .then((res: ApiResponse) => {
-          setLocations(res.data);
+          const newLocations: Location[] = [];
+          const newClasters: Claster[] = [];
+          res.data.forEach((item) => handleResponse(newLocations, newClasters, item));
+          setLocations(newLocations);
+          setClasters(newClasters);
         })
         .catch((err: AxiosError) => {
           console.error("Помилка при запиті з координатами:", err);
@@ -56,6 +76,7 @@ const LocationData: React.FC = () => {
 
   const customIcon: DivIcon = new L.DivIcon({
     html: renderToString(
+
       <Icon
         path={default_marker}
         style={{
@@ -63,22 +84,23 @@ const LocationData: React.FC = () => {
           outline: 'none',
           background: 'transparent',
           display: 'block',
-          color: '#333', // або інший колір
+          color: '#333',
         }}
       />
     ),
-    className: '', // дуже важливо
-    iconSize: [30, 30], // або твої розміри
-    iconAnchor: [15, 30], // налаштування позиції іконки
+    className: '',
+    iconSize: [30, 30],
+    iconAnchor: [15, 30],
+    popupAnchor: [0, -35],
   });
 
-  const openModal = (location: Location) => {
-    setSelectedLocation(location);  // Встановлюємо вибрану локацію
-    setIsModalOpen(true);            // Відкриваємо модальне вікно
+  const openModal = (loc: Location) => {
+    setSelectedLocation(loc);
+    setIsModalOpen(true);
   };
 
   const closeModal = () => {
-    setIsModalOpen(false);  // Закриваємо модальне вікно
+    setIsModalOpen(false);
   };
 
   return (
@@ -89,31 +111,71 @@ const LocationData: React.FC = () => {
         />
         <MapBoundsLogger onBoundsChange={setMapBounds} />
 
-        {locations.map(loc => (
+        {locations.map((loc, index) => (
           <Marker
-            key={loc.id}
+            key={index}
             position={[loc.lat, loc.lon]}
             icon={customIcon}
+
             eventHandlers={{
-              click: () => openModal(loc),  // Встановлюємо вибрану локацію при кліку
+              click: () => openModal(loc),
+              mouseover: (e) => {
+                clearTimeout(closeTimeout); 
+
+                openTimeout = setTimeout(() => {
+                  e.target.openPopup();
+                }, 300);
+              },
+              mouseout: (e) => {
+
+                closeTimeout = setTimeout(() => {
+                  e.target.closePopup();
+                }, 1000);
+              }
             }}
           >
-            <Popup>
-              <strong>{loc.type}</strong><br />
+            <Popup closeOnClick={false}>
+              <strong>{loc.name}</strong><br />
               {loc.subtype}
+            </Popup>
+          </Marker>
+        ))}
+
+        {clasters.map((claster, index) => (
+          <Marker
+            key={index}
+            position={[claster.lat, claster.lon]}
+            icon={customIcon}
+            eventHandlers={{
+              mouseover: (e) => {
+                clearTimeout(closeTimeout); 
+
+                openTimeout = setTimeout(() => {
+                  e.target.openPopup();
+                }, 300);
+              },
+              mouseout: (e) => {
+
+                closeTimeout = setTimeout(() => {
+                  e.target.closePopup();
+                }, 1000);
+              }
+            }}
+          >
+            <Popup
+  closeOnClick={false}>
+              {`Об'єктів: ${claster.count}`}
             </Popup>
           </Marker>
         ))}
       </MapContainer>
 
-      {
-        isModalOpen && selectedLocation && (
-          <LocationInfoModal
-            location={selectedLocation}
-            onClose={closeModal}
-          />
-        )
-      }
+      {isModalOpen && selectedLocation && (
+        <LocationInfoModal
+          location={selectedLocation}
+          onClose={closeModal}
+        />
+      )}
     </div>
   );
 };

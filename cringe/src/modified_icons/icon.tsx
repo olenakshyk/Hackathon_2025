@@ -13,6 +13,7 @@ const Icon: React.FC<IconProps> = ({ path, style, className, onClick }) => {
       viewBox="0 0 24 24"
       width="25"
       height="30"
+      pointer-events:auto
       onClick={onClick}
       className={className}
       style={{
