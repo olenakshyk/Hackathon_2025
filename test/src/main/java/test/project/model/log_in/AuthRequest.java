@@ -1,4 +1,4 @@
-package main.java.test.project.model.log_in;
+package test.project.model.log_in;
 
 //holds frontend data
 public class AuthRequest {

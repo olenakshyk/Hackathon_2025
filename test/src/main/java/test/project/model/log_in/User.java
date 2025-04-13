@@ -1,10 +1,11 @@
-package main.java.test.project.model.log_in;
+package test.project.model.log_in;
 
 import jakarta.persistence.*;
-import main.java.test.project.model.log_in.Role;
+import test.project.model.log_in.Role;
 
 
 @Entity
+@Table(name = "users_tbl")
 public class User {
 
     @Id
