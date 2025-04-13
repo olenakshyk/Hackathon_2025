@@ -74,7 +74,7 @@ function AppWithRouter() {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage />} />
+        <Route path="/register" element={<RegisterPage/>} />
       </Routes>
     </Router>
   );

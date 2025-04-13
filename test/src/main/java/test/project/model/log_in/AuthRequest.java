@@ -1,13 +1,16 @@
 package test.project.model.log_in;
 
+import lombok.Getter;
+import lombok.Setter;
+
 //holds frontend data
+@Getter
+@Setter
 public class AuthRequest {
     private String username;
     private String password;
-    private String role;
+    private Role role;
 
-
-    // Getters/Setters
     public String getUsername() {
         return username;
     }
@@ -22,13 +25,5 @@ public class AuthRequest {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }

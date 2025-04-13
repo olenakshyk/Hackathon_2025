@@ -35,10 +35,12 @@ const RegisterPage = () => {
             })
             .then((response) => {
                 if (!response.ok) {
+                    // Якщо відповідь не ок — пробуємо прочитати текст помилки
                     return response.text().then((text) => {
                         throw new Error(text || 'Registration failed');
                     });
                 }
+                // Якщо все ок — розпарсимо JSON
                 return response.json();
             })
             .then((data: RegisterResponse) => {
