@@ -1,5 +1,6 @@
 package test.project.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import test.project.spec.LocationSpecification;
@@ -7,16 +8,34 @@ import test.project.model.Cluster;
 import test.project.model.ClusterDTO;
 import test.project.model.Location;
 import test.project.model.LocationDTO;
+import test.project.model.Review;
+import test.project.model.ReviewDTO;
 import test.project.repository.LocationRepository;
+import test.project.repository.ReviewRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
 public class LocationService {
 
     private final LocationRepository locationRepository;
+
+    @Autowired
+    private ReviewRepository reviewRepository;
+
+    public List<ReviewDTO> getReviewsByPlaceId(Long placeId) {
+        List<Review> reviews = reviewRepository.findByPlaceId(placeId);
+        return reviews.stream().map(review -> {
+            ReviewDTO dto = new ReviewDTO();
+            dto.setComment(review.getComment());
+            dto.setRating(review.getRating());
+            dto.setAuthor(review.getAuthor());
+            return dto;
+        }).collect(Collectors.toList());
+    }
 
     public LocationService(LocationRepository locationRepository) {
         this.locationRepository = locationRepository;

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import test.project.model.ReviewDTO;
 import test.project.service.LocationService;
 
 import java.util.List;
@@ -46,6 +47,13 @@ public class LocationController {
     );
 
     return ResponseEntity.ok(response);
-}
+    }
+
+    @GetMapping("/{id}/reviews")
+    public ResponseEntity<List<ReviewDTO>> getReviewsByLocationId(@PathVariable Long id) {
+        List<ReviewDTO> reviews = locationService.getReviewsByPlaceId(id);
+        return ResponseEntity.ok(reviews);
+    }
+
 
 }
