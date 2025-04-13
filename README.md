@@ -42,8 +42,8 @@ To fetch data about locations was used overPass API
 | Java + Spring Boot | Backend API framework |
 | PostgreSQL        | Database               |
 | Python            | Review summarization (AI Model) |
-| TypeScript        | Frontend (Coming Soon) |
-| SCSS              | Frontend Styling (Coming Soon) |
+| TypeScript        | Frontend  |
+| SCSS              | Frontend Styling  |
 
 ---
 
@@ -109,8 +109,7 @@ Hackathon_2025/
 
 ## Authors
 
-Made with ❤️ during Hackathon 2025  
-Team: Natalya & Team Members  
+Made with ❤️ by team cooked_broccoli 
 
 ---
 
