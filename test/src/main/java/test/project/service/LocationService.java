@@ -55,23 +55,20 @@ public class LocationService {
     Boolean hasTactilePaving,
     Boolean onFirstFloor,
     String type,
-    String subtype,
+    List<String> subtype,
     Integer inclusivity,
     Double rating,
     Double latMin,
     Double latMax,
     Double lonMin,
-    Double lonMax
+    Double lonMax,
+    List<String> features
 )
  {
     Specification<Location> spec = Specification.where(LocationSpecification.idEquals(id))
-            .and(LocationSpecification.hasRamp(hasRamp))
-            .and(LocationSpecification.hasElevator(hasElevator))
-            .and(LocationSpecification.hasAdaptiveToilet(hasAdaptiveToilet))
-            .and(LocationSpecification.hasTactilePaving(hasTactilePaving))
-            .and(LocationSpecification.onFirstFloor(onFirstFloor))
+            .and(LocationSpecification.subtypeIn(subtype))
+            .and(LocationSpecification.matchFeatures(features))
             .and(LocationSpecification.typeEquals(type))
-            .and(LocationSpecification.subtypeEquals(subtype))
             .and(LocationSpecification.inclusivityEquals(inclusivity))
             .and(LocationSpecification.ratingAtLeast(rating))
             .and(LocationSpecification.withinBounds(latMin, lonMin, latMax, lonMax));

@@ -24,32 +24,35 @@ public class LocationController {
 
     @GetMapping("/filter")
     public ResponseEntity<List<Object>> filter(
-    @RequestParam(required = false) Double latMin,
-    @RequestParam(required = false) Double latMax,
-    @RequestParam(required = false) Double lonMin,
-    @RequestParam(required = false) Double lonMax,
-    @RequestParam(required = false) Long id,
-    @RequestParam(required = false) Boolean hasRamp,
-    @RequestParam(required = false) Boolean hasElevator,
-    @RequestParam(required = false) Double rating,
-    @RequestParam(required = false) Boolean hasAdaptiveToilet,
-    @RequestParam(required = false) Boolean hasTactilePaving,
-    @RequestParam(required = false) Boolean onFirstFloor,
-    @RequestParam(required = false) String type,
-    @RequestParam(required = false) String subtype,
-    @RequestParam(required = false) Integer inclusivity
-) {
+        @RequestParam(required = false) Double latMin,
+        @RequestParam(required = false) Double latMax,
+        @RequestParam(required = false) Double lonMin,
+        @RequestParam(required = false) Double lonMax,
+        @RequestParam(required = false) Long id,
+        @RequestParam(required = false) Boolean hasRamp,
+        @RequestParam(required = false) Boolean hasElevator,
+        @RequestParam(required = false) Boolean hasAdaptiveToilet,
+        @RequestParam(required = false) Boolean hasTactilePaving,
+        @RequestParam(required = false) Boolean onFirstFloor,
+        @RequestParam(required = false) List<String> features,
+        @RequestParam(required = false) List<String> subtype,
+        @RequestParam(required = false) Double rating,
+        @RequestParam(required = false) Integer inclusivity,
+        @RequestParam(required = false) String type
+    )
+ {
     if (latMin == null || latMax == null || lonMin == null || lonMax == null) {
         return ResponseEntity.badRequest().body(List.of());
     }
 
     List<Object> response = locationService.filterAndMaybeClusterLocations(
     id, hasRamp, hasElevator, hasAdaptiveToilet, hasTactilePaving, onFirstFloor,
-    type, subtype, inclusivity, rating, latMin, latMax, lonMin, lonMax
+    type, subtype, inclusivity, rating, latMin, latMax, lonMin, lonMax, features
     );
 
     return ResponseEntity.ok(response);
     }
+
 
     @GetMapping("/{id}/reviews")
     public ResponseEntity<List<ReviewDTO>> getReviewsByLocationId(@PathVariable Long id) {

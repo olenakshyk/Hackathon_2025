@@ -1,5 +1,7 @@
 package test.project.spec;
 
+import java.util.List;
+
 import org.springframework.data.jpa.domain.Specification;
 
 import test.project.model.Location;
@@ -30,9 +32,11 @@ public class LocationSpecification {
         return (root, query, cb) -> type == null ? null : cb.equal(root.get("type"), type);
     }
 
-    public static Specification<Location> subtypeEquals(String subtype) {
-        return (root, query, cb) -> subtype == null ? null : cb.equal(root.get("subtype"), subtype);
+    public static Specification<Location> subtypeIn(List<String> subtypes) {
+        if (subtypes == null || subtypes.isEmpty()) return null;
+        return (root, query, cb) -> root.get("subtype").in(subtypes);
     }
+    
 
     public static Specification<Location> inclusivityEquals(Integer inclusivity) {
         return (root, query, cb) -> inclusivity == null ? null : cb.greaterThanOrEqualTo(root.get("inclusivity"), inclusivity);
@@ -45,6 +49,30 @@ public class LocationSpecification {
     public static Specification<Location> ratingAtLeast(Double rating) {
         return (root, query, cb) -> rating == null ? null : cb.greaterThanOrEqualTo(root.get("rating"), rating);
     }
+
+    public static Specification<Location> matchFeatures(List<String> features) {
+        if (features == null || features.isEmpty()) return null;
+    
+        Specification<Location> spec = null;
+    
+        for (String feature : features) {
+            Specification<Location> singleSpec = switch (feature) {
+                case "hasRamp" -> hasRamp(true);
+                case "hasElevator" -> hasElevator(true);
+                case "hasAdaptiveToilet" -> hasAdaptiveToilet(true);
+                case "hasTactilePaving" -> hasTactilePaving(true);
+                case "onFirstFloor" -> onFirstFloor(true);
+                default -> null;
+            };
+    
+            if (singleSpec != null) {
+                spec = (spec == null) ? singleSpec : spec.and(singleSpec);
+            }
+        }
+    
+        return spec;
+    }
+    
 
     public static Specification<Location> withinBounds(Double lat1, Double lon1, Double lat2, Double lon2) {
         return (root, query, criteriaBuilder) -> {
