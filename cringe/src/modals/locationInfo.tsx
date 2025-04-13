@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Location } from "../types/Location"
 import axios from 'axios';
 import ReactDOM from 'react-dom/client';
+import scss from "./locationInfo.module.scss"
 
 const root = ReactDOM.createRoot(document.getElementById('root')!);
 
@@ -42,6 +43,7 @@ export const LocationInfoModal: React.FC<{ location: Location; onClose: () => vo
 
     return (
         <div 
+        className={scss.container}
         onClick={onClose}
         style={{
             position: 'fixed',
