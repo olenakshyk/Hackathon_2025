@@ -1,3 +1,5 @@
+
+
 body {
     padding: 0;
     margin: 0;
@@ -11,48 +13,50 @@ body {
 }
 
 .container {
-    width: 100%;
-    height: 100vh;
+    width: 100dvw;
+    height: 100dvh;
     overflow: hidden;
 }
 
 .container2 {
     display: flex;
-    width: 100%;
-    height: 100vh;
-    flex-wrap: nowrap;
+    width: 128dvw;
+    height: 100dvh;
 }
 
-.icon {
+.icon{
     aspect-ratio: 1/1;
     transition: 100ms;
     fill: #3b3b3b;
+
 }
 
-.icon_btn {
+.icon_btn{
     @extend .icon;
     filter: drop-shadow(2px 2px 2px #0e0e0e93);
-
-    &:hover {
+    
+    
+    &:hover{
         cursor: pointer;
         scale: 1.1;
-        filter: drop-shadow(2px 2px 2px #0051ffa1);
+    filter: drop-shadow(2px 2px 2px #0051ffa1);
+    
     }
 
-    &:active {
+    &:active{
         transition: 150ms;
         scale: 1.25;
     }
+
 }
 
 .panelToggle {
     @extend .icon_btn;
-    width: clamp(30px, 4vw, 50px);  // flexible width
+    width: 4dvw;
     position: absolute;
     z-index: 1000;
-    right: clamp(10px, 2vw, 30px);  // flexible right margin
-    top: 50%;
-    transform: translateY(-50%);  // center on any height
+    right: 2dvw;
+    top: 46dvh;
     animation: panel-toggle 1s infinite alternate;
     user-select: none;
 }
@@ -60,6 +64,7 @@ body {
 @keyframes panel-toggle {
     0% {
         scale: 1;
+
     }
 
     100% {

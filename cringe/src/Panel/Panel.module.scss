@@ -1,38 +1,43 @@
 .container {
-    width: clamp(250px, 28%, 400px);
-    height: 100%;
+    width: 28dvw;
+    height: 100dvh;
     z-index: 1000;
+
     background: linear-gradient(45deg, rgb(106, 221, 171) 30%, rgb(78, 213, 136) 100%);
     box-shadow: -2px 5px 4px #0000004d;
+
 }
 
 .block1 {
-    padding-bottom: clamp(8px, 0.75vw, 12px);
-    margin: clamp(12px, 1.25vw, 20px);
+
+    padding-bottom: 0.75dvw;
+    margin: 1.25dvw;
     display: flex;
     justify-content: space-between;
     border-bottom: 4px solid #0000001b;
     border-radius: 5px;
 
     .close_btn {
-        width: clamp(20px, 3vw, 40px);
+        width: 3dvw;
     }
 
     .acount_btn {
-        width: clamp(30px, 4vw, 50px);
+        width: 4dvw;
     }
 }
 
 .block2 {
-    margin: clamp(12px, 1.25vw, 20px);
-    padding-bottom: clamp(8px, 0.75vw, 12px);
+    margin: 1.25dvw;
+    padding-bottom: 0.75dvw;
 
     & * {
         outline: none !important;
     }
 
     .collapse {
-        font-size: clamp(18px, 1.7vw, 28px);
+
+        font-size: 170%;
+        // font-weight: 800;
 
         &:hover {
             filter: drop-shadow(2px 2px 4px #0c677337);
@@ -46,26 +51,28 @@
     }
 
     .collapse_icon {
-        width: clamp(16px, 2vw, 32px);
+        width: 2dvw;
         align-self: center;
     }
+
 }
 
 .block3 {
     position: absolute;
     bottom: 0;
     left: 0;
-    width: calc(100% - clamp(20px, 2.5vw, 40px));
-    padding: clamp(12px, 1.25vw, 20px);
+    width: calc(100% - 2.5dvw);
+    padding: 1.25dvw 1.25dvw 0 1.25dvw;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
 
+
 .button {
     background: transparent !important;
-    height: clamp(30px, 4vh, 50px);
+    height: 4dvh;
     outline: none !important;
     transition: 200ms !important;
     box-shadow: 2px 2px 2px #0e0e0e93;
@@ -77,13 +84,14 @@
     justify-content: center;
     align-items: center;
     gap: 5%;
-    font-size: clamp(12px, 1.02vw, 18px);
-    margin-inline: clamp(8px, 1vw, 16px);
+    font-size: 102%;
+    margin-inline: 1dvw;
 
     &:hover {
         cursor: pointer;
         scale: 1.05;
         box-shadow: 2px 2px 2px #00000093;
+
     }
 
     &:active {
@@ -91,34 +99,38 @@
         scale: 1.25;
     }
 
-    & div {
+    & div{
         width: 140%;
     }
+
+
+
 }
 
 .add_location_btn {
     @extend .button;
 }
 
-.contacts_btn {
+.contacts_btn{
     @extend .button;
 }
 
 .contacts_btn_container {
-    padding: clamp(12px, 1.25vw, 20px) clamp(12px, 1.25vw, 20px) clamp(12px, 1.25vw, 20px) 0;
+    padding: 1.25dvw 1.25dvw 1.25dvw 0;
 
     &:hover .contacts_btn {
         transition: 300ms;
         transform: translateX(200%);
     }
+
 }
 
-.icon_container {
+.icon_container{
     width: 30%;
     height: 100%;
 }
 
-.icon {
+.icon{
     aspect-ratio: 1/1;
-    width: clamp(16px, 2vw, 32px);
+    width: 2dvw;
 }
