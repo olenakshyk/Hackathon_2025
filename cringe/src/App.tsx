@@ -63,7 +63,19 @@ function App() {
         </div>
       </div>
     </ConfigProvider>
-  )
+  );
 }
 
-export default App
+function AppWithRouter() {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage/>} />
+      </Routes>
+    </Router>
+  );
+}
+
+export default AppWithRouter;
