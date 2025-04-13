@@ -38,15 +38,14 @@ public class LocationSpecification {
         Specification<Location> spec = null;
     
         for (String subtype : subtypes) {
-            Specification<Location> singleSpec = typeEquals(subtype);
-            if (singleSpec != null) {
-                spec = (spec == null) ? singleSpec : spec.or(singleSpec); 
-            }
+            Specification<Location> singleSpec = (root, query, cb) ->
+                cb.equal(root.get("subtype"), subtype);
+    
+            spec = (spec == null) ? singleSpec : spec.or(singleSpec);
         }
     
         return spec;
     }
-    
     
 
     public static Specification<Location> inclusivityEquals(Integer inclusivity) {
@@ -77,13 +76,12 @@ public class LocationSpecification {
             };
     
             if (singleSpec != null) {
-                spec = (spec == null) ? singleSpec : spec.or(singleSpec);
+                spec = (spec == null) ? singleSpec : spec.and(singleSpec);
             }
         }
     
         return spec;
     }
-    
 
     public static Specification<Location> withinBounds(Double lat1, Double lon1, Double lat2, Double lon2) {
         return (root, query, criteriaBuilder) -> {
