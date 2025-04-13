@@ -37,7 +37,7 @@ build/
 /target/
 
 # Ignore environment files
-.env
+# .env
 
 # Ignore logs
 *.log
