@@ -55,7 +55,7 @@ const RegisterPage = () => {
       <button
         type="button"
         className={styles.backButton}
-        onClick={() => navigate(-1)}
+        onClick={() => navigate("/")}
       >
         ← Назад
       </button>
