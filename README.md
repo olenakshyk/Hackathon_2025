@@ -1,3 +1,10 @@
+# How to start project(requiered to have node.js)
+1. cd cringe
+2. Enter `npm install`
+3. npm run dev
+4. Open new terminal
+5. cd test
+6. mvn spring-boot:run
 
 # Inclusive Places Finder API
 
