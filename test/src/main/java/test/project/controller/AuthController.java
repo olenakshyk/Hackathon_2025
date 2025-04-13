@@ -37,8 +37,7 @@ public class AuthController {
         User user = new User();
         user.setUsername(request.getUsername());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
-        user.setRole(Role.valueOf(request.getRole())); // careful: frontend can send anything
-
+        user.setRole(Role.USER); // фіксована роль
         userRepository.save(user);
 
         return ResponseEntity.ok(Map.of("message", "User registered successfully"));
@@ -56,20 +55,18 @@ public class AuthController {
 
         String token = jwtUtil.generateToken(user.getUsername(), user.getRole().name());
 
-
         return ResponseEntity.ok(new AuthResponse(token));
     }
 
+    // ONLY FOR ADMIN
     @GetMapping("/users")
     public ResponseEntity<?> getAllUsers(@RequestHeader("Authorization") String token) {
         String role = jwtUtil.extractRole(token);
 
-        if (!role.equals("ADMIN")) {
+        if (!"ADMIN".equals(role)) {
             return ResponseEntity.status(403).body("Access denied");
         }
 
         return ResponseEntity.ok(userRepository.findAll());
     }
-
-
 }
