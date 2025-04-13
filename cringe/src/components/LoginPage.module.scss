@@ -1,0 +1,93 @@
+.container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: #f5f5f5;
+  padding: 2rem;
+}
+
+.backButton {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: transparent;
+  border: none;
+  color: #777;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+
+  &:hover {
+      color: #333;
+  }
+}
+
+.loginForm {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  width: 100%;
+  min-height: 600;
+  max-width: 400px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.inputGroup {
+  margin-bottom: 1rem;
+}
+
+.inputGroup label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.inputGroup input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+button[type='submit'] {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #007bff;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type='submit']:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+}
+
+.message {
+  margin-top: 1rem;
+  color: #d9534f;
+  text-align: center;
+}
+
+.links {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.registerLink {
+  font-size: 0.9rem;
+}
+
+.registerText {
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+
+  &:hover {
+      color: #0056b3;
+  }
+}

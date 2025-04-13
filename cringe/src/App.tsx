@@ -9,6 +9,7 @@ import { ConfigProvider, Button } from 'antd';
 import LoginPage from './components/LoginPage';  // Import your LoginPage component
 import RegisterPage from './components/RegisterPage';  // Import your RegisterPage component
 import "./index.scss";
+import { bounds } from 'leaflet';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -38,16 +39,15 @@ function App() {
           {/* Check if the user is logged in */}
           <>
             {/* Кнопки авторизації показуються, якщо користувач не залогінений */}
-            {!isLoggedIn && (
-              <div className={scss.authContainer}>
+            {/* {!isLoggedIn && (<>
                 <Button className={scss.authButton} onClick={handleLogin}>
                   Log In
                 </Button>
                 <Button className={scss.authButton} onClick={handleRegister}>
                   Register
                 </Button>
-              </div>
-            )}
+                </>
+            )} */}
 
             {/* Карта та панель завжди доступні */}
             <Map />
