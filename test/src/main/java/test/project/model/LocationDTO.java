@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class LocationDTO {
-    private final String objectType = "location";
     private Long id;
     private String name;
     private Double lat;
@@ -25,11 +24,5 @@ public class LocationDTO {
     private Boolean hasRamp;
     private Boolean hasTactilePaving;
     private Boolean onFirstFloor;
-    // private Boolean isClaster;
-
-    @JsonProperty("objectType")
-    public String getObjectType() {
-        return "location";
-    }
 
 }
