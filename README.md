@@ -23,15 +23,12 @@ To fetch data about locations was used overPass API
 - Places API
   - Add and manage places
   - Submit and view accessibility reviews
-  - Generate summarized accessibility information from user reviews (AI-powered)
-  
+      
 - Reviews API
   - Add reviews to places
-  - Automatic environment summary generation based on reviews
 
 - Admin Functionality
   - View all users
-  - Manage roles and data
 
 ---
 
@@ -73,49 +70,7 @@ GOOGLE_CLIENT_ID=your_google_client_id
 
 ---
 
-## Running the Project
-
-### Backend
-
-```
-./mvnw spring-boot:run
-```
-
-or
-
-```
-mvn spring-boot:run
-```
-
----
-
-## Folder Structure
-
-```
-Hackathon_2025/
-│
-├── src/               # Java Spring Boot Backend
-│
-├── python/            # Python Scripts for Review Summarization
-│
-├── test/              # Test data & scripts
-│
-├── node_modules/      # Node dependencies (Frontend - in progress)
-│
-└── .env               # Environment variables (local only)
-```
-
----
 
 ## Authors
 
 Made with ❤️ by team cooked_broccoli 
-
----
-
-## Future Plans
-
-- Interactive frontend with React + TypeScript
-- Route planning considering accessibility
-- Map integration
-- AI-powered smart suggestions
