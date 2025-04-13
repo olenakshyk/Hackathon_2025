@@ -15,6 +15,7 @@ import { Claster } from '../types/Claster';
 import { mapSettings } from './mapSettings';
 import { Ifilter } from '../App';
 import { filters } from '../Panel/Filter/Filter';
+import IconChangebale from '../modified_icons/iconChangebale';
 
 
 interface ApiResponse {
@@ -63,7 +64,7 @@ const LocationData: React.FC<{ filter: Ifilter | undefined }> = ({ filter: filte
           lonMin: mapBounds.getSouthWest().lng,
           lonMax: mapBounds.getNorthEast().lng,
           features: filter?.features,
-          subtypes: filter?.types
+          subtype: filter?.types
         },
         paramsSerializer: params => qs.stringify(params, { arrayFormat: "repeat" })
       })
@@ -84,9 +85,9 @@ const LocationData: React.FC<{ filter: Ifilter | undefined }> = ({ filter: filte
     let color = '#333'
     let path = default_marker
     filters.byType.forEach((t, i) => {
-      if (type == t){
+      if (type == t) {
         // color = filters.typeColors[i]
-        // path = filters.typeIcons[i]
+        //   path = filters.typeIcons[i]
       }
     })
 
@@ -94,16 +95,17 @@ const LocationData: React.FC<{ filter: Ifilter | undefined }> = ({ filter: filte
     return new L.DivIcon({
       html: renderToString(
 
-        <Icon
+        <IconChangebale
+          viewBox={type == '' ? '0 0 24 24' : '0 0 512 512'}
           path={path}
           style={{
             stroke: 'none',
             outline: 'none',
             background: 'transparent',
             display: 'block',
-            color: color,
-            fill: color,
-            // scale: type == '' ? 1.5 : 1
+            // color: color,
+            // fill: color,
+            // scale: type == '' ? 1.2 : 1
           }}
         />
       ),

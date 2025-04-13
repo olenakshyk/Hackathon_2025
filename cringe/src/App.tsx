@@ -29,7 +29,7 @@ function App() {
   const [panelOpened, setPanelOpened] = useState<boolean>(false);
   const logoRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    setFilterHook({features: filters.byFeatures, types: filters.byType})
+    setFilterHook({ features: filters.byFeatures, types: filters.byType })
     if (logoRef.current)
       gsap.to(logoRef.current, {
         ease: "power1.out",
@@ -48,21 +48,7 @@ function App() {
       }}
       collapse={{ style: { outline: "none", userSelect: "none" } }}
     >
-      <div className={scss.container}>
-        <div className={scss.container2}>
-          {/* Check if the user is logged in */}
-          <>
-            {/* Кнопки авторизації показуються, якщо користувач не залогінений */}
-            {/* {!isLoggedIn && (<>
-                <Button className={scss.authButton} onClick={handleLogin}>
-                  Log In
-                </Button>
-                <Button className={scss.authButton} onClick={handleRegister}>
-                  Register
-                </Button>
-                </>
-            )} */}
-
+      <div className={style.container}>
         <div className={style.container2}>
           <Map filter={filterState} />
           <div>
@@ -86,7 +72,7 @@ function AppWithRouter() {
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/register" element={<RegisterPage/>} />
+        <Route path="/register" element={<RegisterPage />} />
       </Routes>
     </Router>
   );
