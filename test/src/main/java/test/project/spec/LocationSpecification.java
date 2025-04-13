@@ -34,8 +34,19 @@ public class LocationSpecification {
 
     public static Specification<Location> subtypeIn(List<String> subtypes) {
         if (subtypes == null || subtypes.isEmpty()) return null;
-        return (root, query, cb) -> root.get("subtype").in(subtypes);
+    
+        Specification<Location> spec = null;
+    
+        for (String subtype : subtypes) {
+            Specification<Location> singleSpec = typeEquals(subtype);
+            if (singleSpec != null) {
+                spec = (spec == null) ? singleSpec : spec.or(singleSpec); 
+            }
+        }
+    
+        return spec;
     }
+    
     
 
     public static Specification<Location> inclusivityEquals(Integer inclusivity) {
@@ -66,7 +77,7 @@ public class LocationSpecification {
             };
     
             if (singleSpec != null) {
-                spec = (spec == null) ? singleSpec : spec.and(singleSpec);
+                spec = (spec == null) ? singleSpec : spec.or(singleSpec);
             }
         }
     
