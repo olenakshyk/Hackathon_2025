@@ -86,8 +86,8 @@ const LocationData: React.FC<{ filter: Ifilter | undefined }> = ({ filter: filte
     let path = default_marker
     filters.byType.forEach((t, i) => {
       if (type == t) {
-        // color = filters.typeColors[i]
-        //   path = filters.typeIcons[i]
+        color = filters.typeColors[i]
+          path = filters.typeIcons[i]
       }
     })
 
@@ -103,9 +103,9 @@ const LocationData: React.FC<{ filter: Ifilter | undefined }> = ({ filter: filte
             outline: 'none',
             background: 'transparent',
             display: 'block',
-            // color: color,
-            // fill: color,
-            // scale: type == '' ? 1.2 : 1
+            color: color,
+            fill: color,
+            scale: type == '' ? 1.2 : 1
           }}
         />
       ),

@@ -29,7 +29,7 @@ function App() {
   const [panelOpened, setPanelOpened] = useState<boolean>(false);
   const logoRef = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    setFilterHook({ features: filters.byFeatures, types: filters.byType })
+    setFilterHook({ features: [], types: filters.byType })
     if (logoRef.current)
       gsap.to(logoRef.current, {
         ease: "power1.out",

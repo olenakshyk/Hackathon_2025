@@ -26,7 +26,7 @@ export const Filter: React.FC<{
 }> = ({ filterHook }) => {
 
     return <div>
-        <Divider orientation="left">Тип закладу</Divider>
+        <Divider orientation="left">Фактор інклюзивності</Divider>
 
         {filters.byFeaturesLabels.map((label, id) => {
             const divRef = useRef<HTMLDivElement>(null)
@@ -50,12 +50,12 @@ export const Filter: React.FC<{
                         return { features: [...el.features, value], types: el.types }
                     return { features: el.features.filter(ell => ell != value), types: el.types }
                 })}
-                className={scss.item}>
+                className={scss.item + " " + scss.removed}>
                 {label}
             </div>)
         })}
 
-        <Divider orientation="left">Фактор інклюзивності</Divider>
+        <Divider orientation="left">Тип закладу</Divider>
 
         {filters.byTypeLabels.map((label, id) => {
 
