@@ -35,12 +35,16 @@ public class LocationSpecification {
     }
 
     public static Specification<Location> inclusivityEquals(Integer inclusivity) {
-        return (root, query, cb) -> inclusivity == null ? null : cb.equal(root.get("inclusivity"), inclusivity);
-    }
+        return (root, query, cb) -> inclusivity == null ? null : cb.greaterThanOrEqualTo(root.get("inclusivity"), inclusivity);
+    }    
 
     public static Specification<Location> idEquals(Long id) {
         return (root, query, cb) -> id == null ? null : cb.equal(root.get("id"), id);
-    }    
+    }
+
+    public static Specification<Location> ratingAtLeast(Double rating) {
+        return (root, query, cb) -> rating == null ? null : cb.greaterThanOrEqualTo(root.get("rating"), rating);
+    }
 
     public static Specification<Location> withinBounds(Double lat1, Double lon1, Double lat2, Double lon2) {
         return (root, query, criteriaBuilder) -> {

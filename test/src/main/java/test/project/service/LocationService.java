@@ -8,10 +8,12 @@ import test.project.model.Cluster;
 import test.project.model.ClusterDTO;
 import test.project.model.Location;
 import test.project.model.LocationDTO;
+import test.project.model.NewReviewDTO;
 import test.project.model.Review;
 import test.project.model.ReviewDTO;
 import test.project.repository.LocationRepository;
 import test.project.repository.ReviewRepository;
+import test.project.repository.UserRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +22,10 @@ import java.util.stream.Collectors;
 
 @Service
 public class LocationService {
+
+    @Autowired
+    private UserRepository userRepository; // або UserService, якщо логіку винесено в сервіс
+
 
     private final LocationRepository locationRepository;
 
@@ -51,11 +57,13 @@ public class LocationService {
     String type,
     String subtype,
     Integer inclusivity,
+    Double rating,
     Double latMin,
     Double latMax,
     Double lonMin,
     Double lonMax
-) {
+)
+ {
     Specification<Location> spec = Specification.where(LocationSpecification.idEquals(id))
             .and(LocationSpecification.hasRamp(hasRamp))
             .and(LocationSpecification.hasElevator(hasElevator))
@@ -65,6 +73,7 @@ public class LocationService {
             .and(LocationSpecification.typeEquals(type))
             .and(LocationSpecification.subtypeEquals(subtype))
             .and(LocationSpecification.inclusivityEquals(inclusivity))
+            .and(LocationSpecification.ratingAtLeast(rating))
             .and(LocationSpecification.withinBounds(latMin, lonMin, latMax, lonMax));
 
     List<Location> results = locationRepository.findAll(spec);
@@ -158,8 +167,34 @@ public class LocationService {
         loc.getHasRamp(),
         loc.getHasTactilePaving(),
         loc.getOnFirstFloor()
-        // isCluster = false
     );
 }
+
+    public void addReview(NewReviewDTO dto) {
+        Review review = new Review();
+        review.setAuthor(dto.getAuthor());
+        review.setRating(dto.getRating());
+        review.setComment(dto.getComment());
+        review.setPlaceId(dto.getPlaceId());
+
+        reviewRepository.save(review);
+
+        updateLocationRating(dto.getPlaceId());
+    }
+
+    private void updateLocationRating(Long placeId) {
+        List<Review> reviews = reviewRepository.findByPlaceId(placeId);
+        double avg = reviews.stream().mapToInt(Review::getRating).average().orElse(0);
+        
+        locationRepository.findById(placeId).ifPresent(location -> {
+            location.setRating(avg);
+            locationRepository.save(location);
+        });
+    }
+
+    public boolean userExists(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
+    
 
 }
