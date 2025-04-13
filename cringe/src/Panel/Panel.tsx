@@ -8,6 +8,7 @@ import { Collapse, CollapseProps } from "antd";
 import InfoBlock from "./InfoBlock/InfoBlock";
 import { Filter } from "./Filter/Filter";
 import { Ifilter } from "../App";
+import IconChangebale from "../modified_icons/iconChangebale";
 
 interface IpanelProps {
     opened: boolean
@@ -42,6 +43,7 @@ const Panel: React.FC<IpanelProps> = ({ opened, setOpened, filterHook }) => {
     }, [opened]);
 
     return <div ref={panel} className={scss.container}>
+        
         <div className={scss.block1}>
             <Icon className={style.icon_btn + " " + scss.close_btn} path={right_arrow} onClick={() => {
                 gsap.to(style.panelToggle, {

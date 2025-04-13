@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMapEvents } from 'react-leaflet';
 import axios, { AxiosError } from 'axios';
 import L, { DivIcon, LatLngBounds } from 'leaflet';
+import qs from 'qs';
 import { renderToString } from "react-dom/server";
 
 import scss from "./Map.module.scss";
@@ -61,9 +62,10 @@ const LocationData: React.FC<{ filter: Ifilter | undefined }> = ({ filter: filte
           latMax: mapBounds.getNorthEast().lat,
           lonMin: mapBounds.getSouthWest().lng,
           lonMax: mapBounds.getNorthEast().lng,
-            features: filter?.features,
-            subtypes: filter?.types
-        }
+          features: filter?.features,
+          subtypes: filter?.types
+        },
+        paramsSerializer: params => qs.stringify(params, { arrayFormat: "repeat" })
       })
         .then((res: ApiResponse) => {
           const newLocations: Location[] = [];
@@ -80,31 +82,37 @@ const LocationData: React.FC<{ filter: Ifilter | undefined }> = ({ filter: filte
 
   const customIcon = (type: string): DivIcon => {
     let color = '#333'
-    filters.byType.forEach((t, i) =>{
-      if(type == t)
-        color = filters.typeColors[i]
+    let path = default_marker
+    filters.byType.forEach((t, i) => {
+      if (type == t){
+        // color = filters.typeColors[i]
+        // path = filters.typeIcons[i]
+      }
     })
-    return new L.DivIcon({
-    html: renderToString(
 
-      <Icon
-        path={default_marker}
-        style={{
-          stroke: 'none',
-          outline: 'none',
-          background: 'transparent',
-          display: 'block',
-          color: color,
-          // fill: color,
-          // scale: type == '' ? 1.5 : 1
-        }}
-      />
-    ),
-    className: '',
-    iconSize: [30, 30],
-    iconAnchor: [15, 30],
-    popupAnchor: [0, -35],
-  });}
+
+    return new L.DivIcon({
+      html: renderToString(
+
+        <Icon
+          path={path}
+          style={{
+            stroke: 'none',
+            outline: 'none',
+            background: 'transparent',
+            display: 'block',
+            color: color,
+            fill: color,
+            // scale: type == '' ? 1.5 : 1
+          }}
+        />
+      ),
+      className: '',
+      iconSize: [30, 30],
+      iconAnchor: [15, 30],
+      popupAnchor: [0, -35],
+    });
+  }
 
   const openModal = (loc: Location) => {
     setSelectedLocation(loc);

@@ -1,3 +1,4 @@
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Map from "./Map/Map"
 import style from "./style.module.scss"
 import Icon from "./modified_icons/icon"
@@ -8,6 +9,8 @@ import { ConfigProvider } from 'antd';
 import "./index.scss"
 import gsap from "gsap"
 import { filters } from "./Panel/Filter/Filter"
+import LoginPage from "./components/LoginPage"
+import RegisterPage from "./components/RegisterPage"
 
 export interface Ifilter { features: string[], types: string[] }
 

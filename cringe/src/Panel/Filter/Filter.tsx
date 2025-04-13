@@ -4,6 +4,7 @@ import scss from "./Filter.module.scss"
 import style from "../Panel.module.scss"
 import { Divider } from "antd"
 import { Ifilter } from "../../App"
+import { service_type } from "../../modified_icons/ICONS"
 
 
 
@@ -12,6 +13,7 @@ import { Ifilter } from "../../App"
 
 
 export const filters = {
+    typeIcons : [service_type],
     typeColors: ["#3399ff", "#000099", "#258e8e", "#990000", "#004d00", "#cc5200"],
     byType: ["Shops", "Stores", "Services", "Healthcare", "Tourism", "EatingPlaces"],
     byTypeLabels: ["Продуктові маркети", "Магазини", "Сервіси", "охорона здоров'я", "Туризм", "Заклади харчування"],
