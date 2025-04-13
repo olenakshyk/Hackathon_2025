@@ -1,106 +1,115 @@
 
-# Authentication API
+# Inclusive Places Finder API
 
-## Features:
-- User Registration (Sign Up)
-- User Login (Sign In)
-- Google Authentication (Sign In with Google)
-- Role-based Access Control (USER / ADMIN)
-- JWT Token Authentication
-- Password Hashing with BCrypt
-- PostgreSQL Database Integration
-- Secure API endpoints
-- Environment variables for sensitive data
+A backend solution for an inclusive map platform designed to help users find and evaluate places based on their accessibility and environment. This API powers features like user reviews, accessibility scoring, authentication, and admin management.
+To fetch data about locations was used overPass API
 
 ---
 
+## Features
 
-## Roles:
-- USER → sign-in/sign-up
-- ADMIN → + view all users
+- User Authentication & Authorization
+  - Sign Up / Sign In with JWT
+  - Google Sign-In
+  - Role-based Access Control (USER / ADMIN)
+  
+- Places API
+  - Add and manage places
+  - Submit and view accessibility reviews
+  - Generate summarized accessibility information from user reviews (AI-powered)
+  
+- Reviews API
+  - Add reviews to places
+  - Automatic environment summary generation based on reviews
 
----
-
-## API Endpoints:
-
-### Sign Up → Register new user
-POST /api/auth/signup
-
-Body:
-{
-"username": "your_name",
-"password": "your_password",
-"role" : "USER" //or "ADMIN"
-}
-
----
-
-### Sign In → Login existing user
-POST /api/auth/signin
-
-Body:
-{
-"username": "your_name",
-"password": "your_password"
-}
-
-Response:
-{
-"token": "your JWT token"
-}
+- Admin Functionality
+  - View all users
+  - Manage roles and data
 
 ---
 
-### Sign In with Google → Login with Google Account
-POST /api/auth/google
+## Tech Stack
 
-Body: (Raw String)
-Google ID Token received from Google Sign-In
-
-Response:
-{
-"token": "your JWT token"
-}
-
----
-
-### Get All Users → ADMIN only
-GET /api/auth/users
-
-Headers:
-Authorization: Bearer admin_token
-
-Response if Admin:
-[List of all users]
-
-Response if not Admin:
-Access denied: Only Admin
+| Technology | Purpose                          |
+|------------|---------------------------------|
+| Java + Spring Boot | Backend API framework |
+| PostgreSQL        | Database               |
+| Python            | Review summarization (AI Model) |
+| TypeScript        | Frontend (Coming Soon) |
+| SCSS              | Frontend Styling (Coming Soon) |
 
 ---
 
-## Environment variables:
+## API Endpoints Overview
 
-Create `.env` file in project root:
+| Endpoint | Method | Role | Description |
+|----------|--------|------|-------------|
+| /api/auth/signup | POST | Public | Register new user |
+| /api/auth/signin | POST | Public | Login with username/password |
+| /api/auth/google | POST | Public | Login with Google |
+| /api/auth/users | GET | Admin | Get all users |
+| /api/places | GET/POST | User/Admin | Manage Places |
+| /api/reviews | POST | User | Add a review to a place |
 
+---
+
+## Environment Variables
+
+Create a `.env` file in the root folder:
+
+```
 DB_USERNAME=your_postgres_username
-
 DB_PASSWORD=your_postgres_password
-
-JWT_SECRET=your_secret_key
-
+JWT_SECRET=your_jwt_secret
 GOOGLE_CLIENT_ID=your_google_client_id
+```
 
 ---
 
-## Run the project:
+## Running the Project
 
+### Backend
+
+```
 ./mvnw spring-boot:run
+```
 
 or
 
+```
 mvn spring-boot:run
+```
 
 ---
 
-## Author:
-Made by Natalya
+## Folder Structure
+
+```
+Hackathon_2025/
+│
+├── src/               # Java Spring Boot Backend
+│
+├── python/            # Python Scripts for Review Summarization
+│
+├── test/              # Test data & scripts
+│
+├── node_modules/      # Node dependencies (Frontend - in progress)
+│
+└── .env               # Environment variables (local only)
+```
+
+---
+
+## Authors
+
+Made with ❤️ during Hackathon 2025  
+Team: Natalya & Team Members  
+
+---
+
+## Future Plans
+
+- Interactive frontend with React + TypeScript
+- Route planning considering accessibility
+- Map integration
+- AI-powered smart suggestions
